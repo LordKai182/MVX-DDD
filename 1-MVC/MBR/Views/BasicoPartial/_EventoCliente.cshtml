@@ -1,0 +1,30 @@
+﻿@using (Html.BeginForm("EventosCliente", "Contrato", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+   
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group" >
+                            <select name="EventoId" id="EventoId" class="selectpicker" multiple data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                                <optgroup label="Alterar">
+                                    <option value="1"> Razão Social (Alias)</option>
+                                    <option value="2">Razão Social</option>
+                                    <option value="3">Endereço (Cor./Fat.)</option>
+                                    @*<option value="4">Troca de Titularidade</option>*@
+                                    <option value="5">Inscrição Estadual e Municipal</option>
+                                    <option value="6">Código Fiscal</option>
+                                    <option value="7">Tipo de Cliente Faturamento</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top:-20px; margin-left:20px;">Processar Evento</button>
+                <!-- .container-fluid -->
+        </nav>
+
+    
+}

@@ -1,0 +1,74 @@
+﻿@using Infra;
+@using Infra.Entidades;
+
+@{
+    var db = new Class1(true);
+    var _contrato = (Contrato)Session["_Contrato"];
+}
+
+<div class="row">
+    <div class="col-md-6">
+
+        @using (Html.BeginForm("_ListaContratoVinculados", "Contrato", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <input type="hidden" name="ContratoId" id="ContratoId" value="@_contrato.ContratoId" />
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Novo Contrato Vinculado</legend>
+                <div class="form-row">
+                    <nav class="navbar navbar-dark" role="navigation">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="textinput">Produto</label>
+                            <select name="ProdutoId" id="ProdutoId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                                <optgroup label="Produtos Vinculados">
+
+                                    @foreach (var item in db.Produto.Where(x => x.Associavel))
+                                    {
+                                        <option value="@item.ProdutoId"> @item.Nome.ToUpper()</option>
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </nav>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="textinput">Número da S.O</label>
+                    <div class="col-sm-5">
+                        <input type="text" placeholder="Número da S.O" required name="NumeroSO" id="NumeroSO" class="form-control" onKeyPress="return submitenter(this,event)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="textinput">Valor</label>
+                    <div class="col-sm-5">
+                        <input type="text" name="Valor" id="Valor" value="" placeholder="Valor" required class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <div class="pull-right">
+
+                            <button type="submit" id="iniciar" name="iniciar" class="btn btn-primary">Iniciar Contrato Vinculado</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+            </fieldset>
+        }
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+

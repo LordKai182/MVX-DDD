@@ -1,0 +1,60 @@
+﻿@using Utils;
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@RenderPage("~/Views/BasicoPartial/_EventoBau.cshtml")
+
+
+@Html.PanelHeader("Baú de Arquivos")
+@(Html.AjaxGrid(Url.Action("_Detalhes")))
+@Html.PanelFooter()
+
+@section scripts{
+
+    <script>
+        function validar() {
+
+            var e = document.getElementsByName("Lote[]");
+
+            var teste = '';
+            var num = 0;
+
+            for (var k in e) {
+                var el = e[k];
+
+                if (el.checked) {
+                    teste = teste + ',' + el.value;
+
+                    num++;
+                }
+            }
+
+            document.getElementById("loteIds").value = teste;
+
+        }
+    </script>
+    <script>
+        function AtualiPagina() {
+            location.reload();
+        }
+    </script>
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+
+
+}

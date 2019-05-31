@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Infra.Entidades.ContratoNrc>
+@using Utils;
+@{
+
+}
+@(Html
+      .Grid(Model)
+      .Build(columns =>
+      {
+          columns.Add(model => model._Contrato.Alias).Titled("Alias");
+          columns.Add(model => model._Contrato.NumeroSO).Titled("Número SO");
+          columns.Add(model => model._Produto.Nome).Titled("Produto");
+          columns.Add(model => model._Produto.Tipo).Titled("Faturamento");
+          columns.Add(model => model.Valor).Formatted("{0:c}").Titled("Faturamento");
+          columns.Add(model => model.PrePago == true ? "Sim" : "Não").Titled("Pré Pago");
+          columns.Add(model => model.Exportado == true ? "Sim" : "Não" ).Titled("Exportado");
+          columns.Add(model => Html.ActionLink("Exibir", "Index", "ContratoVinculado", new { ContratoNrcId = model.ContratoNrcId }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Exibir").Encoded(false);
+          columns.Add(model => Html.ActionLink("Excluir", "DeletaContatoVinculado", "Contrato", new { ContatoNrcId = model.ContratoNrcId }, new { @class = "btn btn-danger", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Excluir").Encoded(false);
+      })
+      .Empty("Nada Encontrado")
+
+      .Sortable()
+         .Pageable(pager =>
+         {
+             pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 30, "10" }, { 50, "30" }, { 70, "50" } };
+             pager.ShowPageSizes = true;
+             pager.PagesToDisplay = 5;
+             pager.CurrentPage = 1;
+             pager.RowsPerPage = 30;
+         })
+         .RowCss(model => model._Contrato.ContratoStatusId == 5 ? "bolded" : model._Contrato.ContratoStatusId == 3 ? "cancelado" : "")
+)

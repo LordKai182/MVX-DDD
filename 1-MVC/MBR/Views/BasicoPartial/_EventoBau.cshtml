@@ -1,0 +1,34 @@
+﻿<div class="well" style="background-color:steelblue">
+
+    <div class="form-row" style="margin-top:25px;">
+
+        @using (Html.BeginForm("ProcessaEventos", "Bau", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            <input type="hidden" name="loteIds" id="loteIds" />
+            <div class="form-row">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <h6><span class="label label-default">Eventos</span></h6>
+                            <div class="form-group">
+                                <select name="EventoBau" id="EventoBau" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                                    <optgroup label="Eventos de Arquivos">
+                                        <option value="GeraNf">Gerar NF (Nfse)</option>
+                                        <option value="ConsultaNf">Consultar NF (Nfse)</option>
+                                        <option value="GeraRemessa">Gerar Remessa </option>
+                                        <option value="Modelo22">Gerar Arquivo Fiscal Modelo 22 (ICMS)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+                <button type="submit" class="btn btn-primary" style="margin-left:20px;height:50px;margin-top:25px;">Processar Evento</button>
+                <input type="button" value="(Atualizar)" onclick="AtualiPagina();" style="margin-left:20px;height:50px;margin-top:25px;" class="btn btn-primary ">
+                <div class="d-inline p-2 text-white" style="margin-top:30px;"> Marcar/Desmarcar <input type="checkbox" onchange="validar();" name="select-all" id="select-all" /></div>
+
+            </div>
+        }
+    </div>
+    </div>

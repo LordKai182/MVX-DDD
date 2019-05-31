@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4E113EC2-DE74-4F22-9F71-EF2B0C651290}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infra</RootNamespace>
+    <AssemblyName>Infra</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="netstandard" />
+    <Reference Include="AutoMapper, Version=7.0.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.7.0.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.1.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.1.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Proxies, Version=2.1.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Proxies.2.1.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Proxies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.Relational, Version=2.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Relational.2.1.2\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.1.1\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mvc.Grid.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NonFactors.Grid.Core.Mvc5.5.0.0\lib\net45\Mvc.Grid.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime, Version=2.3.0.0, Culture=neutral, PublicKeyToken=4226afe0d9b296d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NodaTime.2.3.0\lib\net45\NodaTime.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=4.0.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.4.0.3\lib\net451\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFrameworkCore.PostgreSQL, Version=2.1.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.EntityFrameworkCore.PostgreSQL.2.1.2\lib\netstandard2.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime, Version=2.1.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.2.1.1\lib\netstandard2.0\Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.NodaTime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.NodaTime.1.0.0\lib\net45\Npgsql.NodaTime.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Interactive.Async, Version=3.0.3000.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Interactive.Async.3.1.1\lib\net46\System.Interactive.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.0\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.0\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TiposEnum">
+      <HintPath>..\..\..\Dlls\TiposEnum.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
+    <Compile Include="Conexao.cs" />
+    <Compile Include="CustomTypeSqlQuery.cs" />
+    <Compile Include="DatabaseExtensions.cs" />
+    <Compile Include="EntidadesApi\ApiFuncionario.cs" />
+    <Compile Include="EntidadesApi\ApiUsuario.cs" />
+    <Compile Include="EntidadesMundidata\comercial_hist_st_empresas_serv.cs" />
+    <Compile Include="EntidadesMundidata\comercial_status_servicos.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_classes.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_cliente.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_contratacao.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_mvx.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_operadoras.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_servicos.cs" />
+    <Compile Include="EntidadesMundidata\comercial_tipo_ser_generico.cs" />
+    <Compile Include="EntidadesMundidata\financeiro_painel_controle.cs" />
+    <Compile Include="EntidadesMundidata\instalacao_mp_clientes.cs" />
+    <Compile Include="EntidadesMundidata\mvx_agendamentos.cs" />
+    <Compile Include="EntidadesMundidata\mvx_bairros.cs" />
+    <Compile Include="EntidadesMundidata\mvx_cidades.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_contatos.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_dados_atuais.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_historico_endereco.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_hist_end_cobranca.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_hist_end_correspondencia.cs" />
+    <Compile Include="EntidadesMundidata\mvx_empresas_servicos.cs" />
+    <Compile Include="EntidadesMundidata\mvx_funcionarios.cs" />
+    <Compile Include="EntidadesMundidata\mvx_funcionarios_perfil.cs" />
+    <Compile Include="EntidadesMundidata\mvx_logradouros.cs" />
+    <Compile Include="EntidadesMundidata\mvx_logradouros_pref.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios_aluguel.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios_enderecos.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios_historicos.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios_mundibr.cs" />
+    <Compile Include="EntidadesMundidata\mvx_predios_pnc.cs" />
+    <Compile Include="EntidadesMundidata\mvx_unid_federativas.cs" />
+    <Compile Include="EntidadesMundidata\provisioning_configuracao.cs" />
+    <Compile Include="EntidadesMundidata\provisioning_configuracao_aux.cs" />
+    <Compile Include="EntidadesMundidata\provisioning_ips_historico.cs" />
+    <Compile Include="EntidadesMundidata\provisioning_ipv4_historico.cs" />
+    <Compile Include="EntidadesMundidata\provisioning_ipv6_historico.cs" />
+    <Compile Include="EntidadesMundidata\temporario_agenda_prorata.cs" />
+    <Compile Include="EntidadesNaoPersistidas\AcessoUsuario.cs" />
+    <Compile Include="EntidadesNaoPersistidas\ApiRetornoCliente.cs" />
+    <Compile Include="EntidadesNaoPersistidas\ArquivoBau.cs" />
+    <Compile Include="EntidadesNaoPersistidas\ArquivosLinhaCobranca.cs" />
+    <Compile Include="EntidadesNaoPersistidas\BoletoImpressao.cs" />
+    <Compile Include="EntidadesNaoPersistidas\CenarioDetalhes.cs" />
+    <Compile Include="EntidadesNaoPersistidas\Domostrativo.cs" />
+    <Compile Include="EntidadesNaoPersistidas\GrupoImposto.cs" />
+    <Compile Include="EntidadesNaoPersistidas\Icms.cs" />
+    <Compile Include="EntidadesNaoPersistidas\NfseImpressao.cs" />
+    <Compile Include="EntidadesNaoPersistidas\tokeen.cs" />
+    <Compile Include="Entidades\Bairro.cs" />
+    <Compile Include="Entidades\Banco.cs" />
+    <Compile Include="Entidades\BancoVencimento.cs" />
+    <Compile Include="Entidades\BaseCDR.cs" />
+    <Compile Include="Entidades\BaseProbe.cs" />
+    <Compile Include="Entidades\Bau.cs" />
+    <Compile Include="Entidades\Boleto.cs" />
+    <Compile Include="Entidades\BoletoHistorico.cs" />
+    <Compile Include="Entidades\BoletoRemessa.cs" />
+    <Compile Include="Entidades\CDRData.cs" />
+    <Compile Include="Entidades\CDRDataProbe.cs" />
+    <Compile Include="Entidades\Cedente.cs" />
+    <Compile Include="Entidades\Cenario.cs" />
+    <Compile Include="Entidades\CenarioArquivo.cs" />
+    <Compile Include="Entidades\CenarioTeste.cs" />
+    <Compile Include="Entidades\Cfop.cs" />
+    <Compile Include="Entidades\Cidade.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\ClienteConta.cs" />
+    <Compile Include="Entidades\ClienteContato.cs" />
+    <Compile Include="Entidades\ClienteEndereco.cs" />
+    <Compile Include="Entidades\ClienteRelacao.cs" />
+    <Compile Include="Entidades\ClientesRelacionamento.cs" />
+    <Compile Include="Entidades\ComercialTipoOperadora.cs" />
+    <Compile Include="Entidades\Contrato.cs" />
+    <Compile Include="Entidades\ContratoAssociacao.cs" />
+    <Compile Include="Entidades\ContratoDetalhe.cs" />
+    <Compile Include="Entidades\ContratoEvento.cs" />
+    <Compile Include="Entidades\ContratoGrupo.cs" />
+    <Compile Include="Entidades\ContratoHistorico.cs" />
+    <Compile Include="Entidades\ContratoMovimentoFiscal.cs" />
+    <Compile Include="Entidades\ContratoNrc.cs" />
+    <Compile Include="Entidades\ContratoPredio.cs" />
+    <Compile Include="Entidades\ContratoRelac.cs" />
+    <Compile Include="Entidades\ContratoRelacionamento.cs" />
+    <Compile Include="Entidades\ContratoStatus.cs" />
+    <Compile Include="Entidades\DepositoBancario.cs" />
+    <Compile Include="Entidades\Empresa.cs" />
+    <Compile Include="Entidades\EmpresaEndereco.cs" />
+    <Compile Include="Entidades\Estado.cs" />
+    <Compile Include="Entidades\EventosDeContrato.cs" />
+    <Compile Include="Entidades\FaturamentoIdentificado.cs" />
+    <Compile Include="Entidades\FaturamentoRegra.cs" />
+    <Compile Include="Entidades\FaturamentoRegraEmpresa.cs" />
+    <Compile Include="Entidades\Faturamento_nrc.cs" />
+    <Compile Include="Entidades\Faturamento_rc.cs" />
+    <Compile Include="Entidades\FuncionarioCargo.cs" />
+    <Compile Include="Entidades\LimiteDesconto.cs" />
+    <Compile Include="Entidades\LinhaCobranca.cs" />
+    <Compile Include="Entidades\LoginRelacionamento.cs" />
+    <Compile Include="Entidades\MapaFaturamento.cs" />
+    <Compile Include="Entidades\MapaFaturamentoComplemento.cs" />
+    <Compile Include="Entidades\MapeamentoDeContrato.cs" />
+    <Compile Include="Entidades\MapeamentoEvento.cs" />
+    <Compile Include="Entidades\MapeamentoFiscal.cs" />
+    <Compile Include="Entidades\nf.cs" />
+    <Compile Include="Entidades\NfHistorico.cs" />
+    <Compile Include="Entidades\nf_resposta.cs" />
+    <Compile Include="Entidades\NotaFiscal.cs" />
+    <Compile Include="Entidades\NotaFiscalLote.cs" />
+    <Compile Include="Entidades\Plano.cs" />
+    <Compile Include="Entidades\PlanoEmpresa.cs" />
+    <Compile Include="Entidades\Predio.cs" />
+    <Compile Include="Entidades\PredioEndereco.cs" />
+    <Compile Include="Entidades\PrediosRelacionamento.cs" />
+    <Compile Include="Entidades\Produto.cs" />
+    <Compile Include="Entidades\ProdutoDetalhe.cs" />
+    <Compile Include="Entidades\ProdutoHistorico.cs" />
+    <Compile Include="Entidades\ProdutoMapeamento.cs" />
+    <Compile Include="Entidades\PropriedadeProduto.cs" />
+    <Compile Include="Entidades\SetorFuncionario.cs" />
+    <Compile Include="Entidades\StatusCliente.cs" />
+    <Compile Include="Entidades\TipoClienteFaturamento.cs" />
+    <Compile Include="Entidades\TipoImposto.cs" />
+    <Compile Include="Entidades\TipoLogradouro.cs" />
+    <Compile Include="Entidades\TipoPessoa.cs" />
+    <Compile Include="Entidades\TipoProduto.cs" />
+    <Compile Include="Entidades\TipoVip.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\VendedorRelacionamento.cs" />
+    <Compile Include="EntitdadesSolicita\contratos.cs" />
+    <Compile Include="EntitdadesSolicita\c_vencimentos.cs" />
+    <Compile Include="EntitdadesSolicita\propostas.cs" />
+    <Compile Include="EntitdadesSolicita\propostas_enderecos.cs" />
+    <Compile Include="EntitdadesSolicita\propostas_produtos.cs" />
+    <Compile Include="EntitdadesSolicita\propostas_produtos_resumo.cs" />
+    <Compile Include="EntitdadesSolicita\p_classes.cs" />
+    <Compile Include="EntitdadesSolicita\p_servicos.cs" />
+    <Compile Include="Mappings\BairroMap.cs" />
+    <Compile Include="Mappings\BancoMap.cs" />
+    <Compile Include="Mappings\BancoVencimentoMap.cs" />
+    <Compile Include="Mappings\BaseCDRMap.cs" />
+    <Compile Include="Mappings\BaseProbeMap.cs" />
+    <Compile Include="Mappings\BauMap.cs" />
+    <Compile Include="Mappings\BoletoHistoricoMap.cs" />
+    <Compile Include="Mappings\BoletoMap.cs" />
+    <Compile Include="Mappings\BoletoRemessaMap.cs" />
+    <Compile Include="Mappings\CDRDataMap.cs" />
+    <Compile Include="Mappings\CDRDataProbeMap.cs" />
+    <Compile Include="Mappings\CedenteMap.cs" />
+    <Compile Include="Mappings\CenarioArquivoMap.cs" />
+    <Compile Include="Mappings\CenarioMap.cs" />
+    <Compile Include="Mappings\CenarioTesteMap.cs" />
+    <Compile Include="Mappings\CfopMap.cs" />
+    <Compile Include="Mappings\CidadeMap.cs" />
+    <Compile Include="Mappings\ClienteContaMap.cs" />
+    <Compile Include="Mappings\ClienteContatoMap.cs" />
+    <Compile Include="Mappings\ClienteEnderecoMap.cs" />
+    <Compile Include="Mappings\ClienteMap.cs" />
+    <Compile Include="Mappings\ClienteRelacaoMap.cs" />
+    <Compile Include="Mappings\ClientesRelacionamentoMap.cs" />
+    <Compile Include="Mappings\ComercialTipoOperadoraMap.cs" />
+    <Compile Include="Mappings\comercial_hist_st_empresas_servMap.cs" />
+    <Compile Include="Mappings\comercial_status_servicosMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_classesMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_clienteMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_contratacaoMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_mvxMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_operadorasMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_servicosMap.cs" />
+    <Compile Include="Mappings\comercial_tipo_ser_genericoMap.cs" />
+    <Compile Include="Mappings\ContratoAssociacaoMap.cs" />
+    <Compile Include="Mappings\ContratoDetalheMap.cs" />
+    <Compile Include="Mappings\ContratoEventoMap.cs" />
+    <Compile Include="Mappings\ContratoGrupoMap.cs" />
+    <Compile Include="Mappings\ContratoHistoricoMap.cs" />
+    <Compile Include="Mappings\ContratoMap.cs" />
+    <Compile Include="Mappings\ContratoMovimentoFiscalMap.cs" />
+    <Compile Include="Mappings\ContratoNrcMap.cs" />
+    <Compile Include="Mappings\ContratoPredioMap.cs" />
+    <Compile Include="Mappings\ContratoRelacMap.cs" />
+    <Compile Include="Mappings\ContratoStatusMap.cs" />
+    <Compile Include="Mappings\DepositoBancarioMap.cs" />
+    <Compile Include="Mappings\EmpresaEnderecoMap.cs" />
+    <Compile Include="Mappings\EmpresaMap.cs" />
+    <Compile Include="Mappings\EstadoMap.cs" />
+    <Compile Include="Mappings\EventosDeContratoMap.cs" />
+    <Compile Include="Mappings\financeiro_painel_controleMap.cs" />
+    <Compile Include="Mappings\FuncionarioCargoMap.cs" />
+    <Compile Include="Mappings\instalacao_mp_clientesMap.cs" />
+    <Compile Include="Mappings\LimiteDescontoMap.cs" />
+    <Compile Include="Mappings\LinhaCobrancaMap.cs" />
+    <Compile Include="Mappings\MapaFaturamentoComplementoMap.cs" />
+    <Compile Include="Mappings\MapaFaturamentoMap.cs" />
+    <Compile Include="Mappings\MapeamentoEventoMap.cs" />
+    <Compile Include="Mappings\MapeamentoFiscalMap.cs" />
+    <Compile Include="Mappings\mvx_agendamentosMap.cs" />
+    <Compile Include="Mappings\mvx_bairrosMap.cs" />
+    <Compile Include="Mappings\mvx_cidadesMap.cs" />
+    <Compile Include="Mappings\mvx_empresasMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_contatosMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_dados_atuaisMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_historico_enderecoMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_hist_end_cobrancaMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_hist_end_correspondenciaMap.cs" />
+    <Compile Include="Mappings\mvx_empresas_servicosMap.cs" />
+    <Compile Include="Mappings\mvx_funcionariosMap.cs" />
+    <Compile Include="Mappings\mvx_funcionarios_perfilMap.cs" />
+    <Compile Include="Mappings\mvx_logradourosMap.cs" />
+    <Compile Include="Mappings\mvx_logradouros_prefMap.cs" />
+    <Compile Include="Mappings\mvx_prediosMap.cs" />
+    <Compile Include="Mappings\mvx_predios_aluguelMap.cs" />
+    <Compile Include="Mappings\mvx_predios_enderecosMap.cs" />
+    <Compile Include="Mappings\mvx_predios_historicosMap.cs" />
+    <Compile Include="Mappings\mvx_predios_mundibrMap.cs" />
+    <Compile Include="Mappings\mvx_predios_pncMap.cs" />
+    <Compile Include="Mappings\mvx_unid_federativasMap.cs" />
+    <Compile Include="Mappings\NfHistoricoMap.cs" />
+    <Compile Include="Mappings\NotaFiscalLoteMap.cs" />
+    <Compile Include="Mappings\NotaFiscalMap.cs" />
+    <Compile Include="Mappings\PlanoEmpresaMap.cs" />
+    <Compile Include="Mappings\PlanoMap.cs" />
+    <Compile Include="Mappings\PredioEnderecoMap.cs" />
+    <Compile Include="Mappings\PredioMap.cs" />
+    <Compile Include="Mappings\PrediosRelacionamentoMap.cs" />
+    <Compile Include="Mappings\ProdutoDetalheMap.cs" />
+    <Compile Include="Mappings\ProdutoHistoricoMap.cs" />
+    <Compile Include="Mappings\ProdutoMap.cs" />
+    <Compile Include="Mappings\ProdutoMapeamentoMap.cs" />
+    <Compile Include="Mappings\PropriedadeProdutoMap.cs" />
+    <Compile Include="Mappings\provisioning_configuracaoMap.cs" />
+    <Compile Include="Mappings\provisioning_configuracao_auxMap.cs" />
+    <Compile Include="Mappings\provisioning_ips_historicoMap.cs" />
+    <Compile Include="Mappings\provisioning_ipv4_historicoMap.cs" />
+    <Compile Include="Mappings\provisioning_ipv6_historicoMap.cs" />
+    <Compile Include="Mappings\SetorFuncionarioMap.cs" />
+    <Compile Include="Mappings\StatusClienteMap.cs" />
+    <Compile Include="Mappings\temporario_agenda_prorataMap.cs" />
+    <Compile Include="Mappings\TipoClienteFaturamentoMap.cs" />
+    <Compile Include="Mappings\TipoImpostoMap.cs" />
+    <Compile Include="Mappings\TipoLogradouroMap.cs" />
+    <Compile Include="Mappings\TipoPessoaMap.cs" />
+    <Compile Include="Mappings\TipoProdutoMap.cs" />
+    <Compile Include="Mappings\TipoVipMap.cs" />
+    <Compile Include="Mappings\UsuarioMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+</Project>

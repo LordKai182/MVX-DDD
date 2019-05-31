@@ -1,0 +1,134 @@
+﻿@using Infra.Entidades;
+@using Utils;
+@model  IEnumerable<Infra.EntidadesNaoPersistidas.CenarioDetalhes.Detalhes>
+@{
+
+}
+<hr />
+@using (Html.BeginForm("_DetalhesFiltro", "Cenario", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <input type="hidden" name="Cenario" id="Cenario" value="@ViewBag.Cenario" />
+    <div class="form-row" style="margin-bottom:20px;">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Produto</label>
+                    <div class="form-group">
+                        <select name="Produto" id="Produto" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Produto">
+                            <optgroup label="Produto">
+                                @foreach (var Produto in Model.Select(x => x.Produto).Distinct())
+                                {
+                                    <option value="@Produto">@Produto</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Vencimento</label>
+                    <div class="form-group">
+                        <select name="Vencimento" id="Vencimento" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Vencimento">
+                            <optgroup label="Vencimento">
+                                @foreach (var vencimento in Model.Select(x => x.Vencimento).Distinct())
+                                {
+                                    <option value="@vencimento">@vencimento</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        <!--  -->
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Tipo de Faturamento</label>
+                    <div class="form-group">
+                        <select name="TipoCliente" id="TipoCliente" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Tipo de Faturamento">
+                            <optgroup label="Tipo Faturamento">
+                                @foreach (var TipoCliente in Model.Select(x => x.TipoCliente).Distinct())
+                                {
+                                    <option value="@TipoCliente">@TipoCliente</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Plano</label>
+                    <div class="form-group">
+                        <select name="Plano" id="Plano" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Plano">
+                            <optgroup label="Plano">
+                                @foreach (var Plano in Model.Select(x => x.Plano).Distinct())
+                                {
+                                    <option value="@Plano">@Plano</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Cliente</label>
+                    <div class="form-group">
+                        <select name="NomeRazao" id="NomeRazao" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Cliente">
+                            <optgroup label="Cliente">
+                                @foreach (var _Cliente in Model.Select(x => new { x.NomeRazao, x.CnpjCpf }).Distinct())
+                                {
+                                    <option value="@_Cliente.CnpjCpf">@_Cliente.CnpjCpf -- @_Cliente.NomeRazao</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        @if (@ViewBag.Cenario == "Grupo")
+        {
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <label>Grupos de Faturamento</label>
+                        <div class="form-group">
+                            <select name="Grupo" id="Grupo" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Grupos de faturamento">
+                                <optgroup label="Grupo">
+                                    @foreach (var Grupo in Model.Select(x => new { x.Grupo, x.GrupoId }).Distinct())
+                                    {
+                                        <option value="@Grupo.GrupoId">@Grupo.Grupo</option>
+                                    }
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- .container-fluid -->
+            </nav>
+        }
+
+        <div class="container-fluid" style="margin-top:20px;">
+            <button type="button" class="btn btn-primary content-refresh" style="margin-top:-20px; margin-left:20px;">Filtrar</button>
+
+        </div>
+    </div>
+}
+<hr />

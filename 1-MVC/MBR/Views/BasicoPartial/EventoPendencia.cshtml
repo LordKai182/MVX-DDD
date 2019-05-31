@@ -1,0 +1,107 @@
+﻿@using Infra.EntidadesMundidata;
+@{
+
+    List<mvx_funcionarios> Vendedor = new List<mvx_funcionarios>();
+
+    Vendedor = ViewBag.ListaVendedor;
+}
+<style>
+    .paraum {
+    }
+
+    .paradois {
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.10/js/messages/messages.pt-br.js" type="text/javascript"></script>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: steelblue;
+    }
+
+    .faturar {
+        background-color: cadetblue;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .refaturar {
+        background-color: khaki;
+        font-size: 11px;
+        opacity: 0.8;
+    }
+</style>
+
+@using (Html.BeginForm("ProcessaEvento", "Pendencia", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="well" style="background-color:steelblue">
+        <div class="form-row" style="margin-top:25px;">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <input type="hidden" name="ContratosIds" id="ContratosIds" />
+                      
+                        <label for="exampleInputEmail1" style="color:white">Ações</label>
+                        <div class="form-group">
+
+                            <select name="EventoId" id="EventoId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" title="Escolha uma ação." data-actions-box="true">
+                                <optgroup label="Ações">
+                                    <option class="paradois" value="1">Enviar Contrato</option>
+                                    <option class="paradois" value="2">Excluir Contrato</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <label for="exampleInputEmail1" style="color:white">Vendedor</label>
+
+                                <div class="form-group">
+                                    <select name="VendedorId" id="VendedorId" onchange="hideColumn(this.value)" class="selectpicker" multiple data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="false" title="Escolha um Vendedor">
+                                        <optgroup label="Vendedor">
+                                            @foreach (var item in Vendedor)
+                                            {
+                                                <option value="@item.cod_funcionario">@item.nom_funcionario</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </nav>
+                    <!-- .container-fluid -->
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <label for="exampleInputEmail1" style="color:white">Data de Contratação</label>
+                                <input id="datepicker" name="DataContratacao" width="200" />
+                                <script>
+                                    $('#datepicker').datepicker({
+                                        uiLibrary: 'bootstrap4',
+                                        locale: 'pt-br',
+                                    });
+                                </script>
+
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </nav>
+            <button type="submit" id="AplicaEvento" name="AplicaEvento" class="btn btn-primary" style="margin-top:35px; margin-left:20px;height:40px;">Processar Evento</button>
+       </div>
+
+    </div>
+
+}
+
+
+
+

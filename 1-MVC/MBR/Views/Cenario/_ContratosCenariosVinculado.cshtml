@@ -1,0 +1,22 @@
+﻿
+@model  IEnumerable<Infra.EntidadesNaoPersistidas.CenarioDetalhes.Detalhes>
+@{
+    /**/
+
+
+    string Cenario = ViewBag.Cenario;
+}
+
+<div onclick="StatusCenario('1');" class="d-inline p-2 bg-dark text-white">Contratos a Faturar <span class="badge badge-danger">@Model.Count(x => x.StatusCenario == 1)</span></div>
+<div onclick="StatusCenario('2');" class="d-inline p-2 bg-dark text-white">Contratos Faturados <span class="badge badge-danger">@Model.Count(x => x.StatusCenario == 2)</span></div>
+<div onclick="StatusCenario('3');" class="d-inline p-2 bg-dark text-white">Contratos a Modificados <span class="badge badge-danger">@Model.Count(x => x.StatusContrato == 3)</span></div>
+<div onclick="StatusCenario('0');" class="d-inline p-2 bg-dark text-white">Contratos a Novos <span class="badge badge-danger">@Model.Count(x => x.StatusContrato == 4)</span></div>
+@*<div onclick="StatusCenario('5');" class="d-inline p-2 bg-dark text-white">Prorrata <span class="badge badge-danger">@Model.Count(x => x.Prorrata == true)</span></div>*@
+<div onclick="StatusCenario('6');" class="d-inline p-2 bg-dark text-white">Cancelados <span class="badge badge-danger">@Model.Count(x => x.StatusId == 3)</span></div>
+<div onclick="StatusCenario('7');" class="d-inline p-2 bg-dark text-white">Upgrade <span class="badge badge-danger">@Model.Count(x => x.StatusId == 9)</span></div>
+<div class="d-inline p-2 bg-dark text-white">Contratos a Modificados ou não incluidos<span class="badge badge-danger"> 1</span></div>
+
+<div class="d-inline p-2 bg-dark text-white"> Marcar/Desmarcar <input type="checkbox" onchange="validar();" name="select-all" id="select-all" /></div>
+
+
+

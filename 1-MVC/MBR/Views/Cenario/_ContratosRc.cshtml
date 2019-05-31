@@ -1,0 +1,40 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@model  IEnumerable<Infra.Entidades.ContratoNrc>
+@{
+    Utils.Calculos _Calculos = new Utils.Calculos();
+}
+
+@(Html
+
+     .Grid(Model)
+     .Build(columns =>
+     {
+
+         columns.Add(model => model._Contrato.Codigo).Titled("Codigo").Filterable(false);
+         columns.Add(model => model._Produto.Nome).Titled("Produto").Filterable(false);
+         columns.Add(model => model._MapaFaturamento.Count() == 0 ? "Sem Mapa" : model._MapaFaturamento.Last()._Plano.PlanoNome).Titled("Plano").Filterable(false);
+         columns.Add(model => model.DataInstalacao).Titled("Instalação").Formatted(" {0:d} ").Filterable(false);
+         //columns.Add(model => Convert.ToDateTime(model._Contrato.DataInstalacao).Month == Convert.ToInt32(DateTime.Now.Month - 1) && Convert.ToDateTime(model._Contrato.DataInstalacao).Year == DateTime.Now.Year ?
+         //(model._Contrato._MapaFaturamento.First().TipoClienteFaturamentoId == 5 ? Math.Round(_Calculos.MostrarPorcentagem(model._Contrato._MapaFaturamento.First().TipoClienteFaturamentoId == 5 ? Convert.ToDateTime(model.DataInstalacao).Day : Convert.ToDateTime(model._Contrato.DataAlteracao).Day, model._Contrato._MapaFaturamento.First().TipoClienteFaturamentoId == 5 ? DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month) : DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataAlteracao).Month))) : 100) + "%" : null).Titled("% Disponibilidade");
+         columns.Add(model => (Math.Round(_Calculos.MostrarPorcentagem(model._Contrato.ContratoStatusId == 5 ? Convert.ToDateTime(model.DataInstalacao).Day : Convert.ToDateTime(model.DataAlteracao).Day, model._Contrato.ContratoStatusId == 5 ? DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month) : DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataAlteracao).Month)))) + "%").Titled("% Disponibilidade");
+
+
+         columns.Add(model => model._Contrato.ContratoStatusId == 5 ?  (Math.Round(model.Valor / DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month), 2) * ((DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month)) - Convert.ToDateTime(model.DataInstalacao).Day)) :
+                                (Math.Round(model.Valor / DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month), 2) * (Convert.ToDateTime(model.DataInstalacao).Day))
+                               ).Titled("Valor Prorrata").Formatted(" {0:C2} ");
+         columns.Add(model => model.Valor).Titled("Valor").Formatted(" {0:C2} ");
+         //columns.Add(model =>  model._Contrato._MapaFaturamento.FirstOrDefault(x=>x.PlanoId != 174).TipoClienteFaturamentoId == null ? model.Valor : _Calculos.CalculoConfazSemContrato((int)model._Contrato._MapaFaturamento.FirstOrDefault(x => x.PlanoId != 174).TipoClienteFaturamentoId, (model.Valor - (decimal)model._MapaFaturamento.Last(x => x.PlanoId != 174).Desconto), model._Contrato._InstalacaoEndereco.FirstOrDefault(x=>x.TipoLogradouroId == 1)._Bairro._Cidade._Estado.Estadosigla, model._MapaFaturamento.Last().PlanoId)).Titled("Valor Mensalidade Calculado").Formatted(" {0:C2} ");
+
+     })
+
+    .Filterable()
+    .Sortable()
+
+
+
+
+
+
+)

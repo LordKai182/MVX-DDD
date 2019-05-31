@@ -1,0 +1,295 @@
+﻿@using Utils;
+@{
+
+    ViewBag.Title = "Index";
+}
+<button type="button" class="btn btn-primary" onclick="BuscaEvento();"  style="margin-left:20px;height:40px;margin-top:5px;">Evento por S.O</button>
+<button type="button" class="btn btn-primary" id="Evcoca" name="Evcoca"  data-toggle="modal" data-target="#exampleModal" style="margin-left:20px;height:40px;margin-top:5px;display:none;">Evento por S.O</button>
+<p></p>
+<hr />
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:900px;">
+            <div class="modal-header panel-heading" style="background-color:steelblue">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white">Eventos Na S.O</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close" style="color:red">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <input type="hidden" name="ContratosGrupo" id="ContratosGrupo" />
+            @using (Html.BeginForm("SalvarEventos", "Contrato", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div id="conteusoEvento"></div>
+
+
+                <div class="modal-footer panel-heading" style="background-color:steelblue">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar e Descartar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Eventos</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-cliente-tab" data-toggle="tab" href="#nav-cliente" role="tab" aria-controls="nav-cliente" aria-selected="true">Cliente</a>
+        <a class="nav-item nav-link" id="nav-endereco-tab" data-toggle="tab" href="#nav-endereco" role="tab" aria-controls="nav-endereco" aria-selected="false">Endereços</a>
+        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contatos</a>
+        <a class="nav-item nav-link" id="nav-contrato-tab" data-toggle="tab" href="#nav-contrato" role="tab" aria-controls="nav-contrato" aria-selected="false">Contatos Vinculados</a>
+        <a class="nav-item nav-link" id="nav-produto-tab" data-toggle="tab" href="#nav-produto" role="tab" aria-controls="nav-produto" aria-selected="false">Detalhes do Produto</a>
+        <a class="nav-item nav-link" id="nav-mapa-tab" data-toggle="tab" href="#nav-mapa" role="tab" aria-controls="nav-mapa" aria-selected="false">Mapa de Faturamento</a>
+        <a class="nav-item nav-link" id="nav-evento-tab" data-toggle="tab" href="#nav-evento" role="tab" aria-controls="nav-evento" aria-selected="false">Eventos no Contrato</a>
+
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">
+        @Html.PanelHeader("Cliente")
+        <div id="renderCiliente">
+            @{Html.RenderAction("_PartialCliente", "Contrato");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-endereco" role="tabpanel" aria-labelledby="nav-endereco-tab">
+        @Html.PanelHeader("Endereços")
+        <div id="renderEndereco">
+            @{Html.RenderAction("_PartialEndereco", "Contrato");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        @Html.AbrePanelColapsado("Teste", "teste")
+        @RenderPage("~/Views/BasicoPartial/_CadastroContato.cshtml")
+        @Html.FechaPanelColapsado()
+        @Html.BotaoColapse("Cadastrar um Novo Contato", "teste")
+        @Html.PanelHeader("Contatos")
+        @{Html.RenderAction("_PartialContatos", "Contrato");}
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-contrato" role="tabpanel" aria-labelledby="nav-contrato-tab">
+        @Html.AbrePanelColapsado("Teste", "teste")
+        @RenderPage("~/Views/BasicoPartial/_ContratoVinculado.cshtml")
+        @Html.FechaPanelColapsado()
+        @Html.BotaoColapse("Cadastrar um novo Contrato", "teste")
+
+
+        @Html.PanelHeader("Contratos Vinculados")
+        @{Html.RenderAction("_ListaContratoVinculados", "Contrato");}
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-produto" role="tabpanel" aria-labelledby="nav-produto-tab">
+
+        @Html.PanelHeader("Detalhes Produtos")
+        @{Html.RenderAction("_Produto", "Contrato");}
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-mapa" role="tabpanel" aria-labelledby="nav-mapa-tab">
+
+        @Html.PanelHeader("Mapa de faturamento")
+        <div id="renderMapa">
+            @{Html.RenderAction("_MapaFaturamento", "Contrato");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-evento fade" id="nav-evento" role="tabpanel" aria-labelledby="nav-evento-tab">
+
+        @Html.PanelHeader("Eventos no Contrato")
+        <div id="renderMapa">
+            @{Html.RenderAction("_PartialEventos", "Contrato");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+</div>
+@section scripts
+
+{
+    <script type="text/javascript">
+        function BuscaEvento() {
+            const ipAPI = '/Contrato/BuscarEventoSO?NumeroSO='
+
+            swal.queue([{
+                title: 'Digite a SO',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                confirmButtonText: 'Mostrar Eventos',
+                text:
+                    'Digite a SO para verificar os eventos',
+                showLoaderOnConfirm: true,
+                preConfirm: (numeroSo) => {
+                    $.ajax({
+                        type: "GET",
+                        url: '/Contrato/BuscarEventoSO?NumeroSO=' + numeroSo,
+                        dataType: 'html',
+                        processData: false,
+                        cache: false,
+                        contentType: false,
+                        success: function (content) {
+                            swal({
+                                type: 'success',
+                                title: 'Mundivox',
+                                text: 'Evento Concluido'
+                            })
+                            $("#conteusoEvento").html('');
+                            $("#conteusoEvento").html(content);
+                            $("#Evcoca").click();
+                          
+                        }
+                    });
+                }
+            }])
+        }
+    </script>
+    <script type="text/javascript">
+        function Removeread(id) {
+            document.getElementById(id).removeAttribute('readonly');
+
+        }
+    </script> <!-- JS RETIRA READONLY DETALHES DO PRODUTO-->
+    <script>
+        function EditarEndereco() {
+            document.getElementById('bloco').removeAttribute("readonly");
+            document.getElementById('numero').removeAttribute("readonly");
+            document.getElementById('andar').removeAttribute("readonly");
+            document.getElementById('sala').removeAttribute("readonly");
+            document.getElementById('complemento').removeAttribute("readonly");
+
+        };
+    </script> <!-- JS EDITAR ENDEREÇO-->
+    <script type="text/javascript">
+        $('#formCadastroCliente').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/_PartialCliente',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+                    swal({
+                        type: 'success',
+                        title: 'Mundivox',
+                        text: 'Evento Concluido'
+                    })
+                    $("#renderCiliente").html('');
+                    $("#renderCiliente").html(content);
+
+                }
+            });
+        });
+    </script> <!-- JS ENVIO CADASTRO CLIENTE -->
+    <script type="text/javascript">
+        $('#formCadastroEndereco').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/_PartialEndereco',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+                    swal({
+                        type: 'success',
+                        title: 'Mundivox',
+                        text: 'Evento Concluido'
+                    })
+                    $("#renderEndereco").html('');
+                    $("#renderEndereco").html(content);
+
+                }
+            });
+        });
+    </script> <!-- JS ENVIO CADASTRO ENDERECO -->
+    <script type="text/javascript">
+        $('#formMapaFaturamento').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/_MapaFaturamento',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                    location.reload();
+                }
+            });
+        });
+    </script> <!-- JS ENVIO MAPA FATURAMENTO -->
+    <script>
+        function BuscaEndereco(endereco) {
+            var TeamDetail = '/Contrato/Endereco/?TipoEndereco=' + endereco+'&ContratoId='+@Model.ContratoId
+            $.getJSON(TeamDetail, displayData);
+
+        };
+
+        function displayData(response) {
+
+            if (response != null) {
+                for (var i = 0; i < response.length; i++) {
+
+                    if (response[0].Predio == "ENDERECO NAO CADASTRADO") {
+                        document.getElementById('PredioId').value = "";
+                        document.getElementById('numero').value = "";
+                        document.getElementById('bloco').value = "";
+                        document.getElementById('sala').value = "";
+                        document.getElementById('andar').value = "";
+                        document.getElementById('complemento').value = "";
+                        document.getElementById('numero').value = "";
+                        document.getElementById('EnderecoId').value = (0);
+                        document.getElementById('cep').removeAttribute("readonly");
+                        document.getElementById('numero').removeAttribute("readonly");
+                        document.getElementById('andar').removeAttribute("readonly");
+                        document.getElementById('bloco').removeAttribute("readonly");
+                        document.getElementById('sala').removeAttribute("readonly");
+                        document.getElementById('complemento').removeAttribute("readonly");
+                        document.getElementById('cep').focus();
+                        document.getElementById('rua').value = "";
+                        document.getElementById('bairro').value = "";
+                        document.getElementById('cidade').value = "";
+                        document.getElementById('cep').value = "";
+                        document.getElementById('NomePredio').value = "";
+                        document.getElementById('uf').value = "";
+                        document.getElementById('ibge').value = "";
+
+                    } else {
+                        document.getElementById('PredioId').value = (response[i]._predioid);
+                        document.getElementById('numero').value = (response[i]._Numero);
+                        document.getElementById('complemento').value = (response[i]._Complemento);
+                        document.getElementById('andar').value = (response[i]._Andar);
+                        document.getElementById('bloco').value = (response[i]._Bloco);
+                        document.getElementById('sala').value = (response[i]._Sala);
+                        document.getElementById('cep').setAttribute('readonly', 'readonly');
+                        document.getElementById('numero').setAttribute('readonly', 'readonly');
+                        document.getElementById('andar').setAttribute('readonly', 'readonly');
+                        document.getElementById('bloco').setAttribute('readonly', 'readonly');
+                        document.getElementById('sala').setAttribute('readonly', 'readonly');
+                        document.getElementById('complemento').setAttribute('readonly', 'readonly');
+                        document.getElementById('EnderecoId').value = (response[i].Enderecoid);
+                        document.getElementById('rua').value = (response[i]._Logradouro);
+                        document.getElementById('bairro').value = (response[i].Bairro);
+                        document.getElementById('cidade').value = (response[i].Cidade);
+                        document.getElementById('cep').value = (response[i]._Cep);
+                        document.getElementById('NomePredio').value = (response[i].Predio);
+                        document.getElementById('uf').value = (response[i].Uf);
+
+
+                    }
+                }
+            } if (response == null) {
+                document.getElementById('cep').removeAttribute("readonly");
+                document.getElementById('cep').focus();
+            }
+        }
+    </script> <!-- JS BUSCA ENDEREÇO-->
+}

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Infra.Entidades.ClienteContato>
+    @using Utils;
+    @{
+
+    }
+<p></p>
+
+    <p></p>
+    @(Html
+           .Grid(Model)
+           .Build(columns =>
+           {
+               columns.Add(model => model.Nome).Titled("Nome").Filterable(true);
+               columns.Add(model => model.FuncionarioCargo).Titled("Cargo").Filterable(true);
+               columns.Add(model => model.TelefoneFixo).Titled("Telefone Fixo").Filterable(true);
+               columns.Add(model => model.Email).Titled("E-Mail").Filterable(true);
+               columns.Add(model => @Html.ActionLink("Excluir", "DeletaContato",
+               new { ContatoId = model.ClienteContatoId },
+               new { @class = "btn btn-danger", @style = "margin-left:5px;" })
+               .ToHtmlString()).Encoded(false);
+
+           })
+          .Empty("Nada Encontrado")
+          .WithFilterMode(GridFilterMode.FilterRow)
+          .MultiFilterable()
+          .Filterable()
+          .Sortable()
+            .Pageable(pager =>
+            {
+                pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 10, "10" }, { 30, "30" }, { 50, "50" } };
+                pager.ShowPageSizes = true;
+                pager.PagesToDisplay = 5;
+                pager.CurrentPage = 1;
+                pager.RowsPerPage = 10;
+            })
+            .RowCss(model => model.ClienteId % 2 == 0 ? "bolded" : "")
+
+    )

@@ -1,0 +1,174 @@
+﻿@using Utils;
+@using Infra.Entidades;
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<style>
+    .ver {
+        display: none;
+    }
+</style>
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:1200px;">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="spinnerr ver">
+    <div class="center-div">
+        <div class="inner-div">
+            <div class="loader"></div>
+            <span style="text-align:center;font-size:10px;"><h4>Aguarde</h4></span>
+        </div>
+    </div>
+</div>
+@Html.AbrePanelColapsado("Teste", "teste")
+@RenderPage("~/Views/BasicoPartial/_FiltroArquivos.cshtml")
+@Html.FechaPanelColapsado()
+@Html.BotaoColapse("Filtro de Arquivos", "teste")
+<p></p>
+<div class="well" style="background-color:steelblue">
+
+    @RenderPage("~/Views/BasicoPartial/_EventoArquivos.cshtml")
+</div>
+@Html.PanelHeader("Arquivos")
+@(Html.AjaxGrid(Url.Action("_Detalhes")))
+@Html.PanelFooter()
+@section scripts{
+    <script>
+        function validar() {
+            var e = document.getElementsByName("Arquivo[]");
+            var teste = '';
+            var num = 0;
+
+            for (var k in e) {
+                var el = e[k];
+
+                if (el.checked) {
+                    teste = teste + ',' + el.value;
+                    num++;
+                }
+            }
+
+            document.getElementById("ArquivosIds").value = teste;
+            //alert(teste);
+        }
+    </script>
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+    <script>
+        function AtualiPagina() {
+            location.reload();
+        }
+    </script>
+    <script type="text/javascript">
+        function InserirObs(dados) {
+            var url = '/Arquivos/ProcessaEventos';
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (response) {
+
+                    swal({
+                        type: 'success',
+                        title: 'Mundivox',
+                        text: response.responseText
+                    });
+                    AtualiPagina();
+                },
+                error: function (response) {
+                    swal(response.responseText);
+                    $('.ver').css('display', 'none');
+
+                }
+            });
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#formArquivo').submit(function (e) {
+                var d = document.getElementById("EventoArquivo");
+                var value = d.options[d.selectedIndex].value;
+                if (value == "Descricao") {
+                    var dados = new FormData(this);
+
+                    e.preventDefault();
+                    (async function getText() {
+                        const { value: text } = await swal({
+                            input: 'textarea',
+                            inputPlaceholder: 'Digite a Observação aqui ...',
+                            showCancelButton: true,
+                            title: 'Digite a observação.',
+                            showCancelButton: true,
+                            confirmButtonText: 'Inserir',
+                            showLoaderOnConfirm: true,
+                        })
+
+                        if (text) {
+                            dados.append("Observacao", text);
+                            InserirObs(dados);
+                        }
+
+                    })()
+
+                }
+
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        $('.content-refresh').on('click', function () {
+             var tipo = '@(ViewBag.Cenario)';
+
+            var pro = document.getElementById("Cliente");
+            var Cliente = pro.options[pro.selectedIndex].value;
+
+            var nom = document.getElementById("TipoArquivo");
+            var TipoArquivo = nom.options[nom.selectedIndex].value;
+
+          
+            var venc = document.getElementById("Vencimento");
+            var vencimento = venc.options[venc.selectedIndex].value;
+          
+            if (vencimento == "")
+            {
+                vencimento = 0
+            }
+
+            $('.mvc-grid').mvcgrid({
+                requestType: 'post',
+                reload: true,
+                data: {
+
+                    Cliente: Cliente,
+                    TipoArquivo: TipoArquivo,
+                    Vencimento: vencimento
+                }
+            });
+        });
+
+
+    </script>
+}

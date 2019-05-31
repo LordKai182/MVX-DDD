@@ -1,0 +1,87 @@
+﻿@using Infra.Entidades;
+@model Infra.Entidades.Cliente
+@using Utils;
+@{
+    var _contrato = (Contrato)Session["_Contrato"];
+    string editavel = string.Empty;
+    if (_contrato.Exportado)
+    {
+        editavel = "disabled";
+    }
+   // Utils.Formatacao formatacao = new Formatacao();
+}
+@using (Html.BeginForm("", "", FormMethod.Post,new { @id = "formCadastroCliente",@name = "formCadastroCliente" }))
+{
+<fieldset>
+    <input type="hidden" id="ClienteId" name="ClienteId" value="@Model.ClienteId" />
+    <div class="col-sm-10" style="margin:20px;">
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Razão Social", new { @class = "col-md-1 control-label"})
+            <div class="col-md-10">
+                <input type="text" placeholder="RazaoSocial" value="@Model.RazaoSocial" name="RazaoSocial" id="RazaoSocial" class="form-control col-sm-10" @editavel>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Nome Fantasia", new { @class = "col-md-1 control-label" })
+            <div class="col-md-10">
+                <input type="text" placeholder="NomeFantasia" value="@Model.NomeFantasia" name="NomeFantasia" id="NomeFantasia" class="form-control col-sm-10" @editavel>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Código", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Codigo" value="@Model.CodRelacionamento" name="CodRelacionamento" id="CodRelacionamento" class="form-control" disabled>
+            </div>
+            @Html.Label("Cnae", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Cnae" value="@Model.Cnae" name="Cnae" id="Cnae" class="form-control" @editavel>
+            </div>
+
+            @Html.Label("Status", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Status" value="@Model._StatusCliente.Nome" name="StatusClienteId" id="StatusClienteId" class="form-control" disabled>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("CNPJ/CPF", new { @class = "col-md-1 control-label" })
+            <div class="col-md-3">
+                <input type="text" placeholder="CPF/CNPJ" value="@Model.CpfCnpj" name="CpfCnpj" id="CpfCnpj" class="form-control" @editavel>
+            </div>
+            @Html.Label("Incrição Estadual", new { @class = "col-md-2 control-label" })
+            <div class="col-md-2">
+                <input type="number" placeholder="I.E" value="@Model.InscEstadual" name="InscEstadual" id="InscEstadual" class="form-control" @editavel>
+            </div>
+            @Html.Label("Incrição Municipal", new { @class = "col-md-2 control-label" })
+            <div class="col-md-2">
+                <input type="number" placeholder="I.M" value="@Model.InscMunicipal" name="InscMunicipal" id="InscMunicipal" class="form-control" @editavel>
+            </div>
+        </div>
+        <div class="row">
+            @Html.Label("Telefone", new { @class = "col-md-1 control-label" })
+            <div class="col-md-2">
+                <input type="tel" placeholder="Telefone" value="@Model.Telefone" name="Telefone" id="Telefone" class="form-control" @editavel>
+            </div>
+            @Html.Label("E-Mail", new { @class = "col-sm-1 control-label" })
+            <div class="col-md-2">
+                <input type="email" placeholder="Email" value="@Model.Email" name="Email" id="Email" class="form-control" @editavel>
+            </div>
+            @Html.Label("Data de Cadastro", new { @class = "col-sm-2 control-label" })
+            <div class="col-md-2">
+                <input type="date" placeholder="DataCadastro" value="@Convert.ToDateTime(@Model.DataCadastro)" name="DataCadastro" id="DataCadastro" class="form-control" disabled>
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+if (!_contrato.Exportado)
+{
+    <div class="row" style="margin-bottom:15px;">
+        <div class="col-sm-1">
+
+            <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Salvar Edição</button>
+
+        </div>
+        
+    </div>
+}
+}

@@ -1,0 +1,59 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@{
+    var db = new Class1(true);
+    //var _Usuario = (Usuario)Session["_Usuario"];
+    //Utils.Formatacao _formata = new Formatacao();
+}
+<input type="hidden" id="UsuarioId" name="UsuarioId" value="1" />
+<div class="row">
+    <div class="col-md-6">
+        <fieldset>
+            <div class="form-row">
+                <nav class="navbar navbar-dark" role="navigation">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="textinput">Produto</label>
+                        <select name="ProdutoId" id="ProdutoId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Selecione o Produto">
+                            <optgroup label="Produtos">
+                                @foreach (var item in db.Produto.Where(x => x.Faturamento == "RC"))
+                                {
+                                    <option value="@item.ProdutoId"> @item.Nome.ToUpper()</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </nav>
+            </div>
+            <div class="form-row">
+                <nav class="navbar navbar-dark" role="navigation">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="textinput">Cliente</label>
+                        <select name="ClienteId" id="ClienteId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Selecione o Cliente">
+                            <optgroup label="Clientes">
+                                <option selected value="0"> Novo Cliente</option>
+                                @foreach (var item in db.cliente.ToList())
+                                {
+                                    <option value="@item.ClienteId">@item.CpfCnpj -- @item.RazaoSocial.ToUpper()</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </nav>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-10 control-label" for="textinput">Número da S.O</label>
+                <div class="col-sm-10">
+                    <input type="text" placeholder="Número da S.O" required name="NumeroSO" id="NumeroSO" class="form-control" onKeyPress="return submitenter(this,event)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-10 control-label" for="textinput">Valor</label>
+                <div class="col-sm-10">
+                    <input type="number" name="Valor" id="Valor" value="" placeholder="Valor" required class="form-control">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

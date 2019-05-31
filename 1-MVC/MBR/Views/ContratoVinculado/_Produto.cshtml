@@ -1,0 +1,56 @@
+﻿@using Infra.Entidades;
+@{
+    ViewBag.Title = "Produto";
+    var model = (ContratoNrc)Session["_ContratoVinculado"];
+}
+
+<hr />
+<fieldset>
+    <div class="col-sm-10">
+        <div class="row col-md-8" style="padding:10px;">
+            <label class="col-md-1 control-label" for="datavisita">Código</label>
+            <div class="col-md-2">
+                <input id="datavisita" readonly name="datavisita" type="text" placeholder="Data da visita" class="form-control input-md" value="@(model._Produto.Codigo)" required="">
+            </div>
+
+            <label class="col-md-1">Produto</label>
+            <div class="col-md-5">
+                <input id="datavisita" name="datavisita" value=" @Html.DisplayName(model._Produto.Nome)" type="text" readonly class="form-control input-md" required="">
+
+            </div>
+            <label class="col-md-1 control-label" for="cliente">Data Cadastro</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" type="text" value="@Html.DisplayName(model.DataCadastro.ToShortDateString())" readonly class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <div style="margin:10px;"></div>
+        <div class="clearfix"></div>
+        <div style="margin:10px;"></div>
+        <div class="row col-md-10" style="padding:10px;">
+            <label class="col-md-1 control-label" for="datavisita">Faturamento</label>
+            <div class="col-md-1">
+                <input id="datavisita" readonly name="datavisita" type="text" placeholder="Data da visita" class="form-control input-md" value="@(model._Produto.Faturamento)" required="">
+            </div>
+
+            <label class="col-md-1">Tipo</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" value="@(model._Produto.Tipo)" type="text" readonly class="form-control input-md" required="">
+
+            </div>
+            
+            <label class="col-md-1 control-label" for="cliente">@Html.DisplayName(model._Produto.Status)</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" type="text" value=" @(model._Produto.Status)" readonly class="form-control input-md" required="">
+
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+<p></p>
+<p></p>
+
+  @{ Html.RenderAction("_Detalhes", "ContratoVinculado"); }
+
+

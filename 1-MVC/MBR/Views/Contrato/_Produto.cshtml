@@ -1,0 +1,59 @@
+﻿@model Infra.Entidades.Contrato
+@{
+    ViewBag.Title = "Produto";
+}
+
+<hr />
+<fieldset>
+    <div class="col-sm-10">
+        <div class="row col-md-8" style="padding:10px;">
+            <label class="col-md-1 control-label" for="datavisita">@Html.DisplayNameFor(model => model._Produto.Codigo)</label>
+            <div class="col-md-2">
+                <input id="datavisita" readonly name="datavisita" type="text" placeholder="Data da visita" class="form-control input-md" value="@Html.DisplayFor(model =>  model._Produto.Codigo)" required="">
+            </div>
+
+            <label class="col-md-1">@Html.DisplayNameFor(model => model._Produto.Nome)</label>
+            <div class="col-md-5">
+                <input id="datavisita" name="datavisita" value=" @Html.DisplayFor(model =>  model._Produto.Nome)" type="text" readonly class="form-control input-md" required="">
+
+            </div>
+            <label class="col-md-1 control-label" for="cliente">@Html.DisplayNameFor(model => model._Produto.DataCriacao)</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" type="text" value="@Html.DisplayFor(model =>  model._Produto.DataCriacao)" readonly class="form-control input-md" required="">
+
+            </div>
+        </div>
+        <div style="margin:10px;"></div>
+        <div class="clearfix"></div>
+        <div style="margin:10px;"></div>
+        <div class="row col-md-8" style="padding:10px;">
+            <label class="col-md-1 control-label" for="datavisita">@Html.DisplayNameFor(model => model._Produto.Faturamento)</label>
+            <div class="col-md-2">
+                <input id="datavisita" readonly name="datavisita" type="text" placeholder="Data da visita" class="form-control input-md" value="@Html.DisplayFor(model =>  model._Produto.Tipo)" required="">
+            </div>
+
+            <label class="col-md-1">@Html.DisplayNameFor(model => model._Produto.Tipo)</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" value="@Html.DisplayFor(model =>  model._Produto.Faturamento)" type="text" readonly class="form-control input-md" required="">
+
+            </div>
+            <label class="col-md-1 control-label" for="cliente">@Html.DisplayNameFor(model => model._Produto.DataCriacao)</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" type="text" value="@Html.DisplayFor(model =>  model._Produto.DataCriacao)" readonly class="form-control input-md" required="">
+
+            </div>
+            <label class="col-md-1 control-label" for="cliente">@Html.DisplayNameFor(model => model._Produto.Status)</label>
+            <div class="col-md-2">
+                <input id="datavisita" name="datavisita" type="text" value=" @Html.DisplayFor(model =>  model._Produto.Status)" readonly class="form-control input-md" required="">
+
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+<p></p>
+<p></p>
+
+  @{ Html.RenderAction("_Detalhes", "Contrato"); }
+
+

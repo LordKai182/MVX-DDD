@@ -1,0 +1,109 @@
+﻿@{
+
+}
+<input type="hidden" name="ContratosIdsSp" id="ContratosIdsSp" />
+<input type="hidden" name="EventoId" id="EventoId" value="12" />
+<input type="hidden" name="Cenario" id="Cenario" value="@ViewBag.Cenario" />
+
+<div class="form-row " style="align-content:center">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <h6><span class="label label-default">Mês de Competências</span></h6>
+            <div class="form-group">
+                <select name="competencias" id="competencias" class="selectpicker slec" required multiple data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                    <option value="1">01</option>
+                    <option value="2">02</option>
+                    <option value="3">03</option>
+                    <option value="4">04</option>
+                    <option value="5">05</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+        </div>
+    </nav>
+    <div class="form-check-inline">
+        <div class="col-10">
+            <label class="control-label" for="textinput">Ano de Competência</label>
+
+            <input type="number" required placeholder="Ano" value="" name="Ano" id="Ano" class="form-control col-8">
+
+        </div>
+    </div>
+    @*<div class="form-check-inline">
+        <div class="col-10">
+
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                    <label class="form-check-label" for="gridRadios1">
+                        Nota Única
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                    <label class="form-check-label" for="gridRadios2">
+                        Nota por Competência
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+    <p></p>
+    <div class="form-check-inline">
+        <hr />
+        <div class="col-10" style="margin-top:10px;float:left;font-size:12px;">
+            <h5>Observações Personalizadas</h5>
+            <p>
+                Você pode definir com alguns "Gaps" informações personalizadas em suas observações.
+                Obs: "Gaps" são de finidos com a seguinte Sintaxe "[exmplo]" a baixo uma lista de Gaps ja configurados
+            </p>
+            <p><span class="badge badge-danger">1</span> [valor] Representa o Valor do Documento</p>
+            <p><span class="badge badge-danger">2</span> [razao] Representa a Razão Social do Cliente do Documento</p>
+            <p><span class="badge badge-danger">3</span> [mes] Representa o Mês do Documento</p>
+            <p><span class="badge badge-danger">4</span> [vencimento] Representa o Vencimento do Documento</p>
+            <p><span class="badge badge-danger">5</span> [ano] Representa o Ano do Documento</p>
+        </div>
+    </div>
+    <p></p>
+  
+        <div class="col-10">
+            <label for="form7">Observação</label>
+            <textarea type="text" id="Observacao" name="Observacao" class="md-textarea form-control col-10" rows="5" ></textarea>
+
+        </div>
+   
+</div>
+<script>
+    $('.slec').selectpicker();
+</script>
+<script type="text/javascript">
+    $('#FormEspecial').submit(function () {
+        var dados = new FormData(this);
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '/Contrato/FaturamentoEspecial',
+            dataType: 'html',
+            data: dados,
+            processData: false,
+            cache: false,
+            contentType: false,
+            success: function (content) {
+                swal({
+                    type: 'success',
+                    title: 'Mundivox',
+                    text: response.responseText
+                    //footer: '<a href>Why do I have this issue?</a>'
+                });
+
+            }
+        });
+    });
+</script> <!-- JS ENVIO CADASTRO CLIENTE -->

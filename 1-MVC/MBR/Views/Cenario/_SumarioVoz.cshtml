@@ -1,0 +1,25 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@model  Infra.EntidadesNaoPersistidas.CenarioDetalhes.SumarioDados
+@{
+   
+}
+@(Html
+
+       .Grid(Model)
+       .Build(columns =>
+       {
+           columns.Add(model => model.Codigo).Titled("Tipo de Cenario").Filterable(true);
+           columns.Add(model => model.Totalfaturado == null ? 0 : model.Totalfaturado).Formatted(" {0:C2} ").Titled("Total Faturado").Filterable(true);
+           columns.Add(model => model.QtdFaturado).Titled("Qtd. Faturado").Filterable(true);
+           columns.Add(model => model.TotalSemfatura).Formatted(" {0:C2} ").Titled("Total sem Fatura").Filterable(true);
+           columns.Add(model => model.QtdSemFatura).Titled("Qtd. sem Fatura").Filterable(true);
+           columns.Add(model => Html.ActionLink("Detalhes", "Detalhes", new { Tipo = "Voz" }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Detalhes").Encoded(false);
+       })
+      .Empty("Nada Encontrado")
+      .Filterable()
+      .Sortable()
+
+
+)

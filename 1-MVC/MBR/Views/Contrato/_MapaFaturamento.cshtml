@@ -1,0 +1,167 @@
+﻿@model  Infra.Entidades.MapaFaturamento
+@using Infra;
+@using Infra.Entidades;
+
+@{
+    ViewBag.Title = "Edit";
+    var db = new Class1(true);
+    var _contrato = (Contrato)Session["_Contrato"];
+    string editavel = string.Empty;
+    if (_contrato.Exportado)
+    {
+        editavel = "disabled";
+    }
+
+}
+@using (@Html.BeginForm("", "", FormMethod.Post, new { @id = "formMapaFaturamento", @name = "formMapaFaturamento" }))
+{
+    <input type="hidden" name="ContratoId" id="ContratoId" value="@_contrato.ContratoId" />
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="panel-body">
+                    <hr />
+                    <div class="form-group row col-sm-10">
+                        <label class="control-label" for="textinput">Alias</label>
+                        <div class="col-sm-10">
+                            <input type="text" placeholder="Alias" value="@Model._Contrato.Alias" name="Alias" id="Alias" class="form-control col-sm-10" @editavel>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row col-sm-12">
+                        <label class="control-label" for="textinput">Produto</label>
+                        <div class="col-sm-2">
+                            <input type="text" placeholder="Produto" value="@Model._Contrato._Produto.Nome" name="Produto" id="Produto" class="form-control" @editavel>
+                        </div>
+                        <label class="control-label" for="textinput">Valor do Contrato</label>
+                        <div class="col-sm-2">
+                            <input type="text" placeholder="Alias" value="@String.Format("{0:C}", @Model._Contrato.Valor)" name="Alias" id="Alias" class="form-control" disabled>
+                        </div>
+                        <label class="control-label" for="textinput">Meses Validade</label>
+                        <div class="col-sm-1">
+                            <input type="number" placeholder="MesValidade" value="@Model.MesValidade" name="MesValidade" id="MesValidade" class="form-control" @editavel>
+                        </div>
+                        <label class="control-label" for="textinput">Renovação Automatica</label>
+                        <div class="col-sm-3">
+                            <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                                <select name="RenovacaoAutomatica" id="RenovacaoAutomatica" class="selectpicker" title="Atual: @(Model.RenovacaoAutomatica == true ? "Sim" : "Não")" @editavel>
+                                    <option value="true">Sim</option>
+                                    <option value="false">Não</option>
+                                </select>
+                            </nav>
+                        </div>
+
+                    </div>
+                    <div class="form-group row col-sm-10">
+                        <label class="control-label" for="textinput">Regra Faturamento</label>
+                        <nav class="navbar navbar-default col-sm-10" role="navigation" style="margin-top:-10px;">
+                            <select name="PlanoId" id="PlanoId" class="selectpicker col-sm-10" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model._Plano.PlanoNome)" @editavel>
+                                <optgroup label="Regras de Faturamento">
+                                    @foreach (var item in db.Plano.Where(x => x.Ativado && x.PlanoTipo == "RC"))
+                                    {
+                                        <option value="@item.PlanoId">@item.PlanoNome</option>
+                                    }
+                                </optgroup>
+                            </select>
+                        </nav><!-- MAPA FATURAMENTO-->
+                    </div>
+                    <div class="form-group row col-sm-10">
+
+                        <label class="control-label" for="textinput">Vencimento</label>
+                        <div class="col-sm-2">
+                            <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                                <select name="Vencimento" id="Vencimento" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model.Vencimento)" @editavel>
+                                    <optgroup label="Dia de Vencimento">
+                                        @foreach (var item in db.BancoVencimento)
+                                        {
+                                            <option value="@item.Vecimento">@item.Vecimento</option>
+                                        }
+                                    </optgroup>
+                                </select>
+                            </nav>
+                        </div><!--Vencimento-->
+                        <label class="control-label" for="textinput">Mês/Parcelas</label>
+                        <div class="col-sm-2">
+                            <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                                <select name="MesParcelas" id="MesParcelas" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model.MesParcelas)" @editavel>
+                                    <optgroup label="Dia de Vencimento">
+                                        <option value="1">Vencimento</option>
+                                        <option value="2">Vencido</option>
+                                    </optgroup>
+                                </select>
+                            </nav>
+                        </div><!--MES/PARCELAS-->
+                        <label class="control-label" for="textinput">Tipo Faturamento</label>
+                        <div class="col-sm-2">
+                            <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                                <select name="TipoClienteFaturamentoId" id="TipoClienteFaturamentoId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model._TipoClienteFaturamento == null ? "N/A" :  Model._TipoClienteFaturamento.Descricao)" @editavel>
+                                    <optgroup label="Tipo de Faturamento">
+                                        @foreach (var item in db.TipoClienteFaturamento)
+                                        {
+                                            <option value="@item.TipoClienteFaturamentoId">@item.Descricao</option>
+                                        }
+                                    </optgroup>
+                                </select>
+                            </nav>
+                        </div><!--TIPO DE FATURAMENTO-->
+                    </div>
+                    <div class="form-group row col-sm-12">
+                        <label class="control-label" for="textinput">Desconto (%)</label>
+                        <div class="col-sm-1">
+                            <input type="number" placeholder="Desconto" value="@Model.Desconto" name="Desconto" id="Desconto" class="form-control" @editavel>
+                        </div>
+                        <label class="control-label" for="textinput">Retenção (%)</label>
+                        <div class="col-sm-1">
+                            <input type="number" placeholder="Retenção" value="@Model.Retensao" name="Retensao" id="Retensao" class="form-control" @editavel>
+                        </div>
+                        <label class="control-label" for="textinput">Pré Pago</label>
+                        <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                            <select name="PrePago" id="PrePago" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model.PrePago == true ? "Sim" : "Não")" @editavel>
+                                <optgroup label="Pré Pago">
+                                    <option value="true">Sim</option>
+                                    <option value="false">Não</option>
+                                </optgroup>
+                            </select>
+                        </nav>
+                        <label class="control-label" for="textinput">Parceiro Mundivox</label>
+                        <nav class="navbar navbar-default" role="navigation" style="margin-top:-10px;">
+                            <select name="ParceiroMvx" id="ParceiroMvx" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model._Contrato.ParceiroMvx == true ? "Sim" : "Não")" @editavel>
+                                <optgroup label="Parceiro Mundivox">
+                                    <option value="true">Sim</option>
+                                    <option value="false">Não</option>
+                                </optgroup>
+                            </select>
+                        </nav>
+                    </div>
+                    <div class="form-group row col-sm-12">
+                        <label class="control-label" for="textinput">Código CFOP</label>
+                        <div class="form-group row col-sm-10">
+                            <nav class="navbar navbar-default col-sm-10" role="navigation" style="margin-top:-10px;">
+                                <select name="CodigoFiscal" id="CodigoFiscal" class="selectpicker col-sm-10" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Atual: @(Model.CodigoFiscal)" @editavel>
+                                    <optgroup label="Tipo de Faturamento">
+                                        @foreach (var item in db.Cfop)
+                                        {
+                                            <option value="@item.Codigo">@item.Codigo - @item.Descricao</option>
+                                        }
+                                    </optgroup>
+                                </select>
+                            </nav>
+                        </div><!--TIPO DE FATURAMENTO-->
+                    </div><!--CFOP -->
+                </div>
+            </div>
+        </div>
+    </div>
+    if (!_contrato.Exportado)
+    {
+        <div class="row" style="margin-bottom:15px;">
+            <div class="col-sm-1">
+
+                <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Salvar Mapa de Faturamento</button>
+
+            </div>
+
+        </div>
+    }
+}

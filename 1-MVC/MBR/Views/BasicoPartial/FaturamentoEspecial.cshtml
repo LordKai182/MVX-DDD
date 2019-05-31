@@ -1,0 +1,60 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@{
+    var db = new Class1(true);
+}
+<input type="hidden" id="UsuarioId" name="UsuarioId" value="1" />
+<div class="form-row">
+    <div class="col-md-6">
+        <fieldset>
+            <div class="form-row">
+                <nav class="navbar navbar-dark" role="navigation">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="textinput">
+                            Competência
+                        </label>
+                        <select name="competencias" id="competencias" class="selectpicker" multiple data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                           
+                            <optgroup label="Competência">
+                                <option value="1">01</option>
+                                <option value="2">02</option>
+                                <option value="3">03</option>
+                                <option value="4">04</option>
+                                <option value="5">05</option>
+                                <option value="6">06</option>
+                                <option value="7">07</option>
+                                <option value="8">08</option>
+                                <option value="9">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </nav>
+            </div>
+        </fieldset>
+
+        <div class="form-row">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                <label class="form-check-label" for="gridRadios1">
+                    Nota Única
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                <label class="form-check-label" for="gridRadios2">
+                    Nota por Competência
+                </label>
+            </div>
+            <p></p>
+           
+                <label for="exampleFormControlTextarea1">Observação</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" style="" cols="900"></textarea>
+            
+        </div>
+    </div>
+   
+</div>

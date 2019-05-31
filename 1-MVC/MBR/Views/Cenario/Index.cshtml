@@ -1,0 +1,36 @@
+﻿@using Utils;
+@{
+
+    ViewBag.Title = "Index";
+}
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Cenario Dados</a>
+      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cenario Voz</a>
+      <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Cenario NRC</a>
+      <a class="nav-item nav-link" id="nav-grupo-tab" data-toggle="tab" href="#nav-grupo" role="tab" aria-controls="nav-grupo" aria-selected="false">Cenario Grupo</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        @Html.PanelHeader("Cenario Dados")
+        @(Html.AjaxGrid(Url.Action("SumarioDados")))
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        @Html.PanelHeader("Cenario Voz")
+        @*@(Html.AjaxGrid(Url.Action("SumarioVoz")))*@
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        @Html.PanelHeader("Cenario NRC")
+        @(Html.AjaxGrid(Url.Action("SumarioVinculado")))
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-grupo" role="tabpanel" aria-labelledby="nav-grupo-tab">
+        @Html.PanelHeader("Cenario Grupo")
+        @(Html.AjaxGrid(Url.Action("SumarioGrupo")))
+        @Html.PanelFooter()
+    </div>
+</div>

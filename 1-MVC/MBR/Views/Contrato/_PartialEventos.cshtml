@@ -1,0 +1,40 @@
+﻿@using Infra.Entidades;
+@using Utils;
+@model  ICollection<EventosDeContrato>
+@{
+
+
+}
+
+@(Html
+                       .Grid(Model)
+                       .Build(columns =>
+                       {
+               //columns.Add(model => Html.CheckBox("ClienteId" + model.ClienteId).ToHtmlString()).Encoded(false);
+               columns.Add(model => model.EventoDescricao).Titled("Evento").Filterable(false);
+               //columns.Add(model => model.Exportado).Titled("Exportado").Filterable(true);
+               //columns.Add(model => model.NumeroSO).Titled("Numero SO").Encoded(false);
+               columns.Add(model => model.Consultor).Titled("Consultor").Encoded(false).Filterable(false);
+                           columns.Add(model => model.DataContratacao).Titled("Data Contratação").Encoded(false).Filterable(false);
+                           columns.Add(model => model.Prazo).Titled("Prazo").Encoded(false).Filterable(false);
+               //columns.Add(model => model._Usuario.Nome).Titled("Usuario").Encoded(false).Filterable(true);
+               columns.Add(model => model.ValorAntigo).Titled("Valor Antigo").Encoded(false).Filterable(false);
+                           columns.Add(model => model.ValorNovo).Titled("Valor Novo").Encoded(false).Filterable(false);
+
+               // columns.Add(model => Html.ActionLink("Exibir", "EditarCliente", new { ContratoId = model.ClienteId }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Contratos").Encoded(false);
+           })
+                      .Empty("Nada Encontrado")
+                      .MultiFilterable()
+                      .Filterable()
+                      .Sortable()
+                        .Pageable(pager =>
+                        {
+                            pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 10, "10" }, { 30, "30" }, { 50, "50" } };
+                            pager.ShowPageSizes = true;
+                            pager.PagesToDisplay = 5;
+                            pager.CurrentPage = 1;
+                            pager.RowsPerPage = 10;
+                        })
+    //.RowCss(model => model.ClienteId % 2 == 0 ? "bolded" : "")
+
+)

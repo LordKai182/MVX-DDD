@@ -1,0 +1,65 @@
+﻿@using Utils;
+@{
+
+    ViewBag.Title = "Index";
+}
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-cliente-tab" data-toggle="tab" href="#nav-cliente" role="tab" aria-controls="nav-cliente" aria-selected="true">Cliente</a>
+        <a class="nav-item nav-link" id="nav-produto-tab" data-toggle="tab" href="#nav-produto" role="tab" aria-controls="nav-produto" aria-selected="false">Detalhes do Produto</a>
+        <a class="nav-item nav-link" id="nav-mapa-tab" data-toggle="tab" href="#nav-mapa" role="tab" aria-controls="nav-mapa" aria-selected="false">Mapa de Faturamento</a>
+
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab">
+        @Html.PanelHeader("Cliente")
+        <div id="renderCiliente">
+            @{Html.RenderAction("_PartialCliente", "ContratoVinculado");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-produto" role="tabpanel" aria-labelledby="nav-produto-tab">
+
+        @Html.PanelHeader("Detalhes Produtos")
+        @{Html.RenderAction("_Produto", "ContratoVinculado");}
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-mapa" role="tabpanel" aria-labelledby="nav-mapa-tab">
+
+        @Html.PanelHeader("Mapa de faturamento")
+        <div id="renderMapa">
+            @{Html.RenderAction("_MapaFaturamento", "ContratoVinculado");}
+        </div>
+        @Html.PanelFooter()
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $('#formMapaFaturamento').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/ContratoVinculado/_MapaFaturamento',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                    location.reload();
+                }
+            });
+        });
+    </script> <!-- JS ENVIO MAPA FATURAMENTO -->
+    <script type="text/javascript">
+        function Removeread(id) {
+            document.getElementById(id).removeAttribute('readonly');
+
+        }
+    </script> <!-- JS RETIRA READONLY DETALHES DO PRODUTO-->
+}

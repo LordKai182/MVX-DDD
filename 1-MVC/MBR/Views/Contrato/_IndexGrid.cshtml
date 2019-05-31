@@ -1,0 +1,45 @@
+﻿@using Infra.Entidades;
+@using Utils;
+@model  IEnumerable<Infra.EntidadesNaoPersistidas.ApiRetornoCliente>
+@{
+   
+}
+@(Html
+           .Grid(Model)
+           .Build(columns =>
+           {
+           columns.Add(model => Html.CheckBox("ClienteId" + model.ClienteId).ToHtmlString()).Encoded(false);
+           columns.Add(model => model.Codigo).Titled("Código").Filterable(true);
+           columns.Add(model => model.RazaoSocial).Titled("Razão Social").Filterable(true);
+           columns.Add(model => model.Cnpj).Titled("CPF/CNPJ").Encoded(false);
+           columns.Add(model => model.IE).Titled("I.E").Encoded(false).Filterable(true);
+           columns.Add(model => model.Solicitacoes).Titled("Solicitações").Encoded(false);
+           columns.Add(model => model.Ativos).Titled("Contratos Ativos").Encoded(false);
+           columns.Add(model => model.Cancelados).Titled("Contratos Cancelados").Encoded(false);
+           columns.Add(model => Html.ActionLink("Exibir", "EditarCliente", new { ContratoId = model.ClienteId }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Contratos").Encoded(false);
+    })
+          .Empty("Nada Encontrado")
+          .WithFilterMode(GridFilterMode.FilterRow)
+          .MultiFilterable()
+          .Filterable()
+          .Sortable()
+            .Pageable(pager =>
+            {
+        pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 10, "10" }, { 30, "30" }, { 50, "50" } };
+        pager.ShowPageSizes = true;
+        pager.PagesToDisplay = 5;
+        pager.CurrentPage = 1;
+        pager.RowsPerPage = 10;
+    })
+            .RowCss(model => model.ClienteId % 2 == 0 ? "bolded" : "")
+
+)
+
+    <script type="text/javascript">
+        var inputs = $('[type="checkbox"]'); // colocar os inputs em cache
+        inputs.on('click', function () { // juntar auscultador de evento
+            inputs.get().forEach(function (el) { // iterar com a array nativa
+                el.checked = el == this && this.checked; // marcar ou desmarcar o elemento iterado
+            }, this);
+        });
+    </script>

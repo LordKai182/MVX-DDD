@@ -1,0 +1,254 @@
+﻿@using Utils;
+@using Infra;
+@using Infra.Entidades;
+
+@{
+    ViewBag.Title = "Index";
+    var db = new Class1(true);
+    List<TipoLogradouro> lstTipoLgr = new List<TipoLogradouro>();
+    lstTipoLgr = db.TipoLogradouro.ToList();
+    string ponta = string.Empty;
+    var _contrato = (Contrato)Session["_Contrato"];
+    if (_contrato.ProdutoId == 10 || _contrato.ProdutoId == 2)
+    {
+        ponta = "(A)";
+    }
+}
+
+<div class="form-horizontal">
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal wpc_contact", @id = "formCadastroEndereco", @name = "formCadastroEndereco" }))
+    {
+        <fieldset>
+            <div class="col-sm-11">
+
+                <div class="col-md-5" style="padding:10px;">
+                    @foreach (var item in lstTipoLgr.Where(x => x.TipoLogradouroId != 4))
+                    {
+                        string marca = string.Empty;
+                        if (ViewBag.DefautlLogr == item.TipoLogradouroId)
+                        {
+                            marca = "checked";
+                        }
+                        else
+                        {
+                            marca = string.Empty;
+                        }
+                        if (item.TipoLogradouroId == 1)
+                        {
+                            <label class="radio-inline"><input type="radio" value="@item.TipoLogradouroId" checked="checked" onclick="BuscaEndereco(@item.TipoLogradouroId)" name="tipologr" id="tipologr">@item.Nome @ponta</label>
+
+                        }
+                        else
+                        {
+                            <label class="radio-inline"><input type="radio" value="@item.TipoLogradouroId" onclick="BuscaEndereco(@item.TipoLogradouroId)" name="tipologr" id="tipologr">@item.Nome</label>
+
+                        }
+
+                    }
+                    @if (_contrato.ProdutoId == 39 || _contrato.ProdutoId == 2)
+                    {
+                        <label class="radio-inline"><input type="radio" value="4" onclick="BuscaEndereco(4)" name="tipologr" id="tipologr">Instalação (B)</label>
+
+                    }
+                </div>
+                <hr />
+                <input type="hidden" id="ClienteId" value="@_contrato.ClienteId" name="ClienteId" />
+                <input type="hidden" id="Contra" name="Contra" value="@_contrato.ContratoId" />
+                <input type="hidden" id="PredioId" value="" name="PredioId" />
+                <input type="hidden" id="EnderecoId" value="" name="EnderecoId" />
+                <div class="row" style="margin-bottom:15px;">
+                    <label class="col-md-1 control-label">Prédio:</label>
+                    <div class="col-md-5">
+                        <input name="NomePredio" readonly type="text" id="NomePredio" value="" required="" class="form-control col-md-8">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:15px;">
+                    <label class="col-md-1 control-label" for="hr_fim_tarde">Logradouro</label>
+                    <div class="col-md-4">
+                        <input id="rua" name="rua" required readonly type="text" class="form-control col-md-10">
+
+                    </div>
+                    <label class="col-md-1 control-label" for="hr_inicio_tarde">Complemento: </label>
+                    <div class="col-md-5">
+                        <input id="complemento" readonly name="complemento" type="text" class="form-control col-md-8">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom:15px;">
+                    <label class="col-md-1 control-label">CEP:</label>
+                    <div class="col-md-1">
+                        <input name="cep" type="text" id="cep" value="" readonly size="10" maxlength="9" onblur="pesquisacep(this.value);" required="" class="form-control input-md">
+
+                    </div>
+
+                    <label class="col-sm-1 control-label" for="hr_inicio_tarde">Nº: </label>
+                    <div class="col-sm-1">
+                        <input id="numero" name="numero" required readonly type="number" class="form-control input-md" data-bind="value:replyNumber" />
+                    </div>
+                    <label class="col-md-1 control-label" for="hr_inicio_tarde">Sala:</label>
+                    <div class="col-md-1">
+                        <input name="sala" required type="number" id="sala" value="" readonly size="10" class="form-control input-md" data-bind="value:replyNumber" />
+
+                    </div>
+                    <label class="col-md-1 control-label" for="hr_inicio_tarde">Andar </label>
+                    <div class="col-md-1">
+                        <input name="andar" required id="andar" readonly type="number" class="form-control input-md" data-bind="value:replyNumber" />
+
+                    </div>
+                    <label class="col-md-1 control-label" for="hr_inicio_tarde">Bloco: </label>
+                    <div class="col-md-1">
+                        <input id="bloco" name="bloco" readonly type="number" class="form-control input-md" data-bind="value:replyNumber" />
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+                <div class="row" style="margin-bottom:15px;">
+                    <label class="col-md-1 control-label" for="responsavel_consultor">Cidade:</label>
+                    <div class="col-md-2">
+                        <input id="cidade" name="cidade" readonly type="text" class="form-control input-md" required="" />
+                    </div>
+                    <label class="col-md-1 control-label" for="responsavel_consultor">Bairro:</label>
+                    <div class="col-md-2">
+                        <input id="bairro" name="bairro" readonly type="text" class="form-control input-md" required="">
+
+                    </div>
+                    <label class="col-md-1 control-label" for="responsavel_consultor">UF:</label>
+                    <div class="col-md-1">
+                        <input id="uf" name="uf" readonly type="text" class="form-control input-md" required="">
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <hr />
+
+        </fieldset>
+        if (!_contrato.Exportado)
+        {
+            <div class="row" style="margin-bottom:15px;">
+                <div class="col-sm-1">
+
+                    <button type="submit" id="enviar" name="enviar" class="btn btn-primary">Salvar Endereço</button>
+
+                </div>
+                <div class="col-sm-1">
+
+                    <button type="button" id="edd" name="edd" onclick="EditarEndereco()" class="btn btn-warning ">Editar Endereço</button>
+
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<script type="text/javascript">
+    BuscaEndereco("1");
+</script>
+<script type="text/javascript">
+    if (characterCode == 13) {
+        var _CCp = document.getElementById('cep').value;
+        function pesquisacep(_CCp)
+    }
+    else {
+
+    }
+</script>
+<script type="text/javascript">
+
+    document.getElementById('myButton').onclick = function () {
+        document.getElementById('cep').value = ("");
+        document.getElementById('cep').removeAttribute('readonly');
+        document.getElementById('numero').removeAttribute('readonly');
+        document.getElementById('NomePredio').value = "Prédio Novo (PNC)";
+        document.getElementById('rua').value = ("");
+        document.getElementById('bairro').value = ("");
+        document.getElementById('cidade').value = ("");
+        document.getElementById('uf').value = ("");
+        document.getElementById('ibge').value = ("");
+        document.getElementById('numero').value = ("");
+        document.getElementById('PredioId').value = "1";
+        document.getElementById('cep').focus();
+
+
+    };
+</script>
+
+<script type="text/javascript">
+
+    function limpa_formulário_cep() {
+        //Limpa valores do formulário de cep.
+        document.getElementById('rua').value = ("");
+        document.getElementById('bairro').value = ("");
+        document.getElementById('cidade').value = ("");
+        document.getElementById('uf').value = ("");
+        //document.getElementById('ibge').value = ("");
+    }
+
+    function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('rua').value = (conteudo.logradouro);
+            document.getElementById('bairro').value = (conteudo.bairro);
+            document.getElementById('cidade').value = (conteudo.localidade);
+            document.getElementById('uf').value = (conteudo.uf);
+            //document.getElementById('ibge').value = (conteudo.ibge);
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+
+    function pesquisacep(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if (validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('rua').value = "...";
+                document.getElementById('bairro').value = "...";
+                document.getElementById('cidade').value = "...";
+                document.getElementById('uf').value = "...";
+                //document.getElementById('ibge').value = "...";
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+                document.getElementById('cep').readOnly = true;
+            } //end if.
+            else {
+                //cep é inválido.
+                limpa_formulário_cep();
+                document.getElementById("cep").value = '';
+                document.getElementById("cep").focus();
+                myFunction('CEP Invalido.', 'error');
+
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    };
+
+</script>
+

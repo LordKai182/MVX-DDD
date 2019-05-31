@@ -1,0 +1,25 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@model  IEnumerable<Infra.EntidadesNaoPersistidas.CenarioDetalhes.SumarioDados>
+@{ 
+    string cenario = ViewBag.Cenario;
+}
+@(Html
+
+   .Grid(Model.GroupBy(x=>x.Codigo))
+   .Build(columns =>
+   {
+       columns.Add(model => model.First().Codigo).Titled("Tipo de Cenario").Filterable(true);
+       columns.Add(model => model.Sum(x=>x.Totalfaturado)).Formatted(" {0:C2} ").Titled("Total Faturado").Filterable(true);
+       columns.Add(model => model.Sum(x => x.QtdFaturado)).Titled("Qtd. Faturado").Filterable(true);
+       columns.Add(model => model.Sum(x => x.TotalSemfatura)).Formatted(" {0:C2} ").Titled("Total sem Fatura").Filterable(true);
+       columns.Add(model => model.Sum(x => x.QtdSemFatura)).Titled("Qtd. sem Fatura").Filterable(true);
+       columns.Add(model => Html.ActionLink("Detalhes", "Detalhes", new { Tipo = cenario }, new { @class = "btn btn-primary", @style = "margin-left:5px;"}).ToHtmlString()).Titled("Detalhes").Encoded(false);
+   })
+  .Empty("Nada Encontrado")
+  .Filterable()
+  .Sortable()
+
+
+)

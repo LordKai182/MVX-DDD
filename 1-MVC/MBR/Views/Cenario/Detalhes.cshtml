@@ -1,0 +1,391 @@
+﻿@using Utils;
+
+@*@model  IEnumerable<Infra.EntidadesNaoPersistidas.CenarioDetalhes.Detalhes>*@
+@{
+
+    string Cenario = ViewBag.Cenario;
+    string Cern = "1";
+}
+<style>
+    .ver {
+        display: none;
+    }
+</style>
+@*@RenderPage("~/Views/BasicoPartial/_EventoFaturamentoEspecial.cshtml")*@
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:1200px;">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="spinnerr ver">
+    <div class="center-div">
+        <div class="inner-div">
+            <div class="loader"></div>
+            <span style="text-align:center;font-size:10px;"><h4>Aguarde</h4></span>
+        </div>
+    </div>
+</div>
+
+@Html.AbrePanelColapsado("Teste", "teste")
+@RenderPage("~/Views/BasicoPartial/_FiltroFaturamento.cshtml")
+@Html.FechaPanelColapsado()
+@Html.BotaoColapse("Filtro de Cenario", "teste")
+<div class="well" style="background-color:steelblue">
+
+
+    @RenderPage("~/Views/BasicoPartial/_EventoFaturamento.cshtml")
+</div>
+<div id="ttt"></div>
+@if (Cenario == "Grupo")
+{
+    { Html.RenderAction("MenuGrupo", "Cenario"); }
+
+}
+@if (Cenario == "Dados")
+{
+    { Html.RenderAction("MenuDados", "Cenario"); }
+
+}
+@if (Cenario == "Vinculado")
+{
+    { Html.RenderAction("MenuDadosVinculado", "Cenario"); }
+
+}
+
+@Html.PanelHeader("Cenario " + Cenario)
+@(Html.AjaxGrid(Url.Action("_Detalhes", new { Tipo = ViewBag.Cenario })))
+@Html.PanelFooter()
+@section scripts
+ {
+    
+    <script>
+        $('#select-all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+    </script>
+    <script>
+        function AtualiPagina() {
+            location.reload();
+        }
+    </script>
+
+    <script type="text/javascript">
+        function hideColumn(coluna) {
+            //alert(coluna);
+            //alert(coluna);
+            if ($('td:nth-child(' + coluna + '),th:nth-child(' + coluna + ')').is(":hidden")) {
+                //alert('ESCONDEU');
+                $('td:nth-child(' + coluna + '),th:nth-child(' + coluna + ')').show();
+                $('#EventosGrid').val("");
+            }
+            else {
+                //alert('NAO ESCONDEU');
+                $('td:nth-child(' + coluna + '),th:nth-child(' + coluna + ')').hide();
+                $('#EventosGrid').val("");
+            }
+
+            //$('#EventosGrid').val("");
+
+        };
+    </script>
+    <script>
+        function TentaAi(contratoId) {
+            //$("#Modelo").reload();
+            $.ajax({
+                type: "GET",
+                url: '/Cenario/_ContratosRc?ContratoId=' + contratoId,
+                dataType: 'html',
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                    $("#Modelo").html('');
+                    $("#Modelo").html(content);
+
+                }
+            });
+        }
+    </script>
+
+
+    <script>
+        function StatusCenario(status) {
+              var tipo = '@(ViewBag.Cenario)';
+            $('.mvc-grid').mvcgrid({
+                requestType: 'post',
+                reload: true,
+                data: {
+                    Produto: "",
+                    Tipo: tipo,
+                    Vencimento: 0,
+                    Plano: "",
+                    NomeRazao: "",
+                    TipoCliente: "",
+                    StatusCenario: status,
+                    Grupo: 0
+                }
+            });
+        }
+    </script>
+    <script>
+        function validar() {
+            var e = document.getElementsByName("Contrato[]");
+            var teste = '';
+            var num = 0;
+
+            for (var k in e) {
+                var el = e[k];
+
+                if (el.checked) {
+                    teste = teste + ',' + el.value;
+                    num++;
+                }
+            }
+
+            if (num >= 2) {
+
+                $('.paraum').css('display', 'none');
+            }
+
+            if (num == 1) {
+                $('.paraum').css('display', 'block');
+                $('.paradois').css('display', 'block');
+            }
+          
+            document.getElementById("ContratosIds").value = teste;
+            document.getElementById("ContratosIdsSp").value = teste;
+            //alert(teste);
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#FormEventoCenario').submit(function () {
+                if (document.getElementById("ContratosIds").value == "") {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Selecione ao menos um contrato para poder prosseguir'
+                        //footer: '<a href>Why do I have this issue?</a>'
+                    })
+                    return false;
+                }
+                var url = '/Cenario/ProcessaEvento';
+                var e = document.getElementById("EventoId");
+                var value = e.options[e.selectedIndex].value;
+                if (value == "12") {
+                    //validar();
+                    $('#faturamentoEspecial').click();
+                    // document.getElementById("BtnFatEsp").click();
+                    return false;
+                }
+                if (value == "9" && document.getElementById("Desconto").value == "") {
+                    aplicaDesconto();
+                }
+                if (value == "13" && document.getElementById("VencimentoId").value == "") {
+                    Vencimento();
+                    return false;
+                }
+
+
+                if (value != "9" || value == "9" && document.getElementById("Desconto").value != "") {
+                    var dados = new FormData(this);
+                    $('.ver').css('display', 'block');
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: dados,
+                        processData: false,
+                        cache: false,
+                        contentType: false,
+                        success: function (response) {
+
+                            swal({
+                                type: 'success',
+                                title: 'Mundivox',
+                                text: response.responseText
+                                //footer: '<a href>Why do I have this issue?</a>'
+                            });
+
+                            $('.ver').css('display', 'none');
+                            document.getElementById("Desconto").value = "";
+                            document.getElementById("VencimentoId").value = "";
+                            $('.mvc-grid').mvcgrid({
+
+                                reload: true
+
+                            });
+                        },
+                        error: function (response) {
+                            swal(response.responseText);
+                            $('.ver').css('display', 'none');
+                        }
+                    });
+                }
+
+                return false;
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        $('#AplicaEvento').click(function () {
+            $('.spinner').css('display', 'block');
+
+        });
+    </script>
+    <script type="text/javascript">
+        function Vencimento() {
+
+            swal.queue([{
+                title: 'Digite o Vencimento',
+                input: 'number',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                confirmButtonText: 'Aplicar Vencimento',
+                text:
+                    'Digite o novo Vencimento',
+                showLoaderOnConfirm: true,
+                preConfirm: (vencimento) => {
+                    document.getElementById("VencimentoId").value = vencimento;
+                    if (vencimento != "") {
+                        //alert(document.getElementById("VencimentoId").value);
+                        $('#AplicaEvento').click();
+                    }
+                }
+            }])
+        }
+    </script>
+    <script type="text/javascript">
+        function aplicaDesconto() {
+            const ipAPI = '/Contrato/BuscarSO?NumeroSO='
+
+            swal.queue([{
+                title: 'Digite o Desconto (R$)',
+                input: 'number',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                confirmButtonText: 'Aplicar Desconto',
+                text:
+                    'Digite o Desconto a aplicar',
+                showLoaderOnConfirm: true,
+                preConfirm: (numeroSo) => {
+                    document.getElementById("Desconto").value = numeroSo;
+                    if (numeroSo != "") {
+                        $('#AplicaEvento').click();
+                    }
+                }
+            }])
+        }
+    </script>
+    <script type="text/javascript">
+        $('.content-refresh').on('click', function () {
+             var tipo = '@(ViewBag.Cenario)';
+
+            var pro = document.getElementById("Produto");
+            var produto = pro.options[pro.selectedIndex].value;
+            //alert(produto);
+            var pla = document.getElementById("Plano");
+            var plano = pla.options[pla.selectedIndex].value;
+            //alert(plano);
+            var nom = document.getElementById("NomeRazao");
+            var nomera = nom.options[nom.selectedIndex].value;
+            //alert(nomera);
+            var tipocli = document.getElementById("TipoCliente");
+            var tipocliente = tipocli.options[tipocli.selectedIndex].value;
+            //alert(tipocliente);
+            var valorGrupo = 0;
+            var venc = document.getElementById("Vencimento");
+            var vencimento = venc.options[venc.selectedIndex].value;
+            if (tipo == "Grupo") {
+                var grp = document.getElementById("Grupo");
+                var grupo = grp.options[grp.selectedIndex].value;
+                valorGrupo = grupo;
+                if (grupo == "") {
+                    valorGrupo = 0
+
+                }
+                if (grupo == null) {
+                    valorGrupo = 0
+                }
+            }
+           
+            //alert(grupo);
+            if (vencimento == "")
+            {
+                vencimento = 0
+            }
+            //alert(vencimento);
+            $('.mvc-grid').mvcgrid({
+                requestType: 'post',
+                reload: true,
+                data: {
+                    Produto: produto,
+                    Tipo: tipo,
+                    Vencimento: vencimento,
+                    Plano: plano,
+                    NomeRazao: nomera,
+                    TipoCliente: tipocliente,
+                    StatusCenario: 0,
+                    Grupo: valorGrupo
+                }
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        $('.content-reseta').on('click', function () {
+             var tipo = '@(ViewBag.Cenario)';
+            $('.mvc-grid').mvcgrid({
+                requestType: 'post',
+                reload: true,
+                data: {
+                    Produto: "",
+                    Tipo: tipo,
+                    Vencimento: 0,
+                    Plano: "",
+                    NomeRazao: "",
+                    TipoCliente: "",
+                    StatusCenario: 0,
+                    Grupo: 0
+                }
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        $('#formFaturamentoEspecial').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/CadastroContraManual',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                }
+            });
+        });
+    </script> <!-- JS ENVIO CADASTRO CLIENTE -->
+   
+}

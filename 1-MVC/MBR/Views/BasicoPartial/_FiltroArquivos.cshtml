@@ -1,0 +1,91 @@
+﻿@using Infra.EntidadesNaoPersistidas;
+@using Utils;
+
+@{
+    List<ArquivosLinhaCobranca> Lista = new List<ArquivosLinhaCobranca>();
+    Lista = ViewBag.Filtro;
+}
+<hr />
+@using (Html.BeginForm("_DetalhesFiltro", "Cenario", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <input type="hidden" name="Cenario" id="Cenario" value="@ViewBag.Cenario" />
+    <div class="form-row" style="margin-bottom:20px;">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Cliente</label>
+                    <div class="form-group">
+                        <select name="Cliente" id="Cliente" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Cliente">
+                            <optgroup label="Cliente">
+                                @foreach (var Cliente in Lista.Select(x => new { x.cnpjCpf, x.cliente }).Distinct())
+                                {
+                                    <option value="@Cliente.cliente">@Cliente.cnpjCpf - @Cliente.cliente </option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Tipo de Arquivo</label>
+                    <div class="form-group">
+                        <select name="TipoArquivo" id="TipoArquivo" class="selectpicker"  data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Tipo Arquivo">
+                            <optgroup label="Tipo Arquivo">
+                                @foreach (var TpArq in Lista.Select(x => x.tipoArquivo).Distinct())
+                                {
+                                    string Nome = string.Empty;
+                                    if (TpArq.Equals("BL"))
+                                    {
+                                        Nome = "Boleto";
+                                    }
+                                    if (TpArq.Equals("DEBITO"))
+                                    {
+                                        Nome = "Débito";
+                                    }
+                                    if (TpArq.Equals("ICMS_FORMULARIO"))
+                                    {
+                                        Nome = "ICMS Formulario";
+                                    }
+                                    if (TpArq.Equals("ISS"))
+                                    {
+                                        Nome = "ISS";
+                                    }
+                                    <option value="@TpArq">@Nome</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <label>Vencimento</label>
+                    <div class="form-group">
+                        <select name="Vencimento" id="Vencimento" class="selectpicker"  data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true" title="Vencimento">
+                            <optgroup label="Vencimento">
+                                @foreach (var venci in Lista.Select(x => x.Vencimento).Distinct())
+                                {
+                                  <option value="@venci">@venci</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- .container-fluid -->
+        </nav>
+
+        <div class="container-fluid" style="margin-top:20px;">
+            <button type="button" class="btn btn-primary content-refresh" style="margin-top:-20px; margin-left:20px;">Filtrar</button>
+
+        </div>
+    </div>
+}
+<hr />

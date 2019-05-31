@@ -1,0 +1,103 @@
+﻿<style>
+    .paraum {
+     
+      
+    }
+    .paradois {
+       
+    }
+   
+</style>
+<div class="form-row" style="margin-top:25px;">
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "FormEventoCenario", @name = "FormEventoCenario" }))
+    {
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <input type="hidden" name="ContratosIds" id="ContratosIds" />
+                    <input type="hidden" name="Desconto" id="Desconto" value="" />
+                    <input type="hidden" name="VencimentoId" id="VencimentoId" value="" />
+                    <input type="hidden" name="Cenario" id="Cenario" value="@ViewBag.Cenario" />
+                    <div class="form-group">
+                        <select name="EventoId" id="EventoId" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" title="Escolha uma ação." data-actions-box="true">
+                            <optgroup label="Ações">
+                                @*<option class="paradois" value="1">Mover para Cenario</option>*@
+                                <option class="paradois" value="2">Refaturar Selecionados</option>
+                                @*<option class="paradois" value="2">Refaturar toda a Grid</option>*@
+                                <option class="paraum" value="3">Histórico de Produto</option>
+                                <option class="paraum" value="4">Histórico de NF</option>
+                                <option class="paraum" value="5">Histórico de Boleto</option>
+                                <option class="paraum " value="6">Hítorico de Contrato</option>
+                                @*<option  value="7">Faturar toda a Grid</option>*@
+                                <option  value="8">Faturar Selecionados</option>
+                                <option class="paradois" value="9">Aplicar Desconto</option>
+                                <option class="paradois" value="11">Aplicar Acréscimo</option>
+                                <option class="paradois" value="10">Demonstrativo de Faturamento</option>
+                                <option class="paraum" value="12">Faturamento Especial</option>
+                                <option class="paradois" value="13">Alterar Vencimento</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" id="AplicaEvento" name="AplicaEvento" class="btn btn-primary" style="margin-top:-20px; margin-left:20px;">Processar Evento</button>
+                <!-- .container-fluid -->
+            </div>
+        </nav>
+    }
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                                <input type="button" value="Resetar Busca (Atualizar)" onclick="AtualiPagina();" class="btn btn-primary" style="margin-top:-35px;">
+
+                @*<input type="button" value="Resetar Busca (Atualizar)" class="btn btn-primary content-reseta" style="margin-top:-35px;">*@
+            </div>
+        </div>
+    </nav>
+    <div class="form-row" style="margin-top:-30px;">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <select name="EventosGrid" id="EventosGrid" onchange="hideColumn(this.value)" class="selectpicker" multiple data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="false">
+                                <optgroup label="Esconder ou Mostrar">
+                                    <option value="2">Codigo Mundidata</option>
+                                    <option value="3">Tipo Pagamento</option>
+                                    <option value="4">Tipo do Faturamento</option>
+                                    <option value="5">Tipo de Cliente</option>
+                                    <option value="6">Vencimento</option>
+                                    <option value="7">Compentencia</option>
+                                    <option value="8">CPF/CNPJ</option>
+                                    <option value="9">Razão Social</option>
+                                    <option value="10">Data Instalação/Cancelamento</option>
+                                    <option value="11">Valor total (RCs)</option>
+                                    <option value="12">RCs</option>
+                                    <option value="13">Produto</option>
+                                    <option value="14">Plano</option>
+                                    <option value="15">Renovação Automatica</option>
+                                    <option value="16">Cidade</option>
+                                    <option value="17">UF</option>
+                                    <option value="18">% Disponibilidade</option>
+                                    <option value="19">% Aplicada</option>
+                                    <option value="20">Valor Bruto</option>
+                                    <option value="21">Desconto</option>
+                                    <option value="22">Grupo</option>
+                                    <option value="23">Exibir Contrato</option>
+
+                                </optgroup>
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </nav>
+
+    </div>
+</div>
+
+
+
+

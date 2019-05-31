@@ -1,0 +1,14 @@
+﻿@model IGrid<Infra.EntidadesNaoPersistidas.CenarioDetalhes.Detalhes>
+
+<tr>
+    <td colspan="2"><b>Linhas por Grid</b></td>
+    <td><b>@(Model.Rows.Count())</b></td>
+    <td><b>Mensalidade por Grid</b></td>
+    <td><b>@String.Format("{0:C2}", (Model.Rows.Sum(x => x.Model.ValorMensalidade + x.Model.ValorTotalRc)+ Model.Rows.Sum(x => x.Model.ValorTotalRc)))</b></td>
+    <td><b>Total de Linhas no Cenario</b></td>
+    <td><b>@(Model.Source.Count())</b></td>
+    <td><b>Valor Total no Cenario</b></td>
+    <td><b>@String.Format("{0:C2}", (Model.Source.Sum(x => x.ValorMensalidade) + Model.Source.Sum(x => x.ValorTotalRc)))</b></td>
+    <td></td>
+    <td></td>
+</tr>

@@ -1,0 +1,159 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@using Infra.EntidadesNaoPersistidas;
+@model  IEnumerable<CenarioDetalhes.Detalhes>
+@{
+    #region LISTAS
+
+    Utils.Formatacao _Formatacao = new Utils.Formatacao();
+    Utils.Calculos _Calculos = new Utils.Calculos();
+    #endregion
+    var teste = Model;
+    string Cenario = ViewBag.Cenario;
+}
+<style>
+    .table-hover tbody tr:hover {
+        background-color: steelblue;
+    }
+
+    .faturar {
+        background-color: cadetblue;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .refaturar {
+        background-color: khaki;
+        font-size: 11px;
+        opacity: 0.8;
+    }
+</style>
+
+<button data-id="1" id="faturamentoEspecial" name="faturamentoEspecial" class="btn btn-primary" data-toggle="modal" data-target="#especial" style="display:none">Teste</button>
+<div class="modal fade" id="especial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:800px;">
+        <div class="modal-content" style="width:800px;">
+            <div class="modal-header panel-heading" style="background-color:steelblue">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white">Faturamento Especial</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close" style="color:red">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("FaturamentoEspecial", "Cenario", FormMethod.Post, new { @class = "form-horizontal", @id = "FormEventoCenario", @name = "FormEventoCenario" }))
+            {
+                <div class="modal-body">
+
+
+                    @RenderPage("~/Views/BasicoPartial/_EventoFaturamentoEspecial.cshtml")
+
+                </div>
+                <div class="modal-footer panel-heading" style="background-color:steelblue">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Iniciar Contrato</button>
+
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:500px;">
+        <div class="modal-content" style="width:500px;">
+            <div class="modal-header panel-heading" style="background-color:steelblue">
+                <h5 class="modal-title" id="exampleModalLabel" style="color:white">Contrato Vinculado "RCs'</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close" style="color:red">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("CadastroContraManual", "Contrato", FormMethod.Post, new { @class = "form-horizontal", @id = "formCadastroContrato", @name = "formCadastroContrato" }))
+            {
+                <div id="Modelo" class="modal-body" style="width:500px;">
+                    @*@RenderPage("~/Views/BasicoPartial/_CadastroContratoManual.cshtml")*@
+                </div>
+                <div class="modal-footer panel-heading" style="background-color:steelblue">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@(Html
+
+                                           .Grid(Model)
+                                           .Build(columns =>
+                                           {
+                                               columns.Add(model => Html.CheckBox("Contrato[]", false, new { @value = model.ContratoId, @onchange = "validar();" }));
+                                               columns.Add(model => model.CodigoMundiData).Filterable(true).Titled("CódigoMundidata");
+                                               columns.Add(model => model.TipoPagamento).Titled("Tipo Pagamento").WithFilterOptions(new[]
+                                              {
+                                               new SelectListItem(),
+                                               new SelectListItem { Value = "Débito Automatico", Text = "Débito Automatico" },
+                                               new SelectListItem { Value = "Boleto", Text = "Boleto" },
+                                               new SelectListItem { Value = "Depósito", Text = "Depósito" }
+                                                                                                      });
+                                               columns.Add(model => model.TipoDoFaturamento).Titled("Tipo do Faturamento").WithFilterOptions(new[]
+                                                  {
+                                               new SelectListItem(),
+                                               new SelectListItem { Value = "Upgrade", Text = "Upgrade" },
+                                               new SelectListItem { Value = "Cancelado", Text = "Cancelado" },
+                                               new SelectListItem { Value = "Normal", Text = "Normal" }
+                                               });
+                                               columns.Add(model => model.VencidoVencimento).Titled("Vencido/Vencimento").Filterable(true).WithFilterOptions(new[]
+                                                  {
+                                               new SelectListItem(),
+                                               new SelectListItem { Value = "Vencido", Text = "Vencido" },
+                                               new SelectListItem { Value = "Vencimento", Text = "Vencimento" },
+                                               
+                                               });
+                                               columns.Add(model => model.TipoCliente).Titled("Tipo de Cliente").Filterable(true).WithFilterOptions(new SelectList(Model.Select(x => x.TipoCliente).Distinct()));
+                                               columns.Add(model => model.Vencimento).Titled("Vencimento").Filterable(true);
+                                               columns.Add(model => model.Competencia).Titled("Prestação/Vencimento").Filterable(true);
+                                               columns.Add(model => model.CnpjCpf.Length == 14 ? _Formatacao.FormataCnpjCpf(model.CnpjCpf) : model.CnpjCpf.Length == 11 ? _Formatacao.FormataCnpjCpf(model.CnpjCpf) : "Não possivel formatar").Titled("CPF/CNPJ").Filterable(true);
+                                               columns.Add(model => model.NomeRazao).Titled("Razão Social").WithFilterOptions(new SelectList(Model.Select(x => x.NomeRazao).Distinct()));
+                                               columns.Add(model => model.StatusId == 5 ? model.DataInstalacao : model.DataStatus).Titled("Instalação/Cancelamento/upgrade").Formatted("{0:d}");
+
+                                               columns.Add(model => model.ValorTotalRc).Titled("Valor Total (RCs)").Formatted(" {0:C2} ");
+                                               columns.Add(model => model.PossuiRc == false ? "N/A" : "<button data-id=\"" + model.PlanoId + "\" onclick='TentaAi(" + model.ContratoId + ");' class=\"btn btn - primary\" data-toggle='modal' data-target='#exampleModal'>RCs</button>").Titled("RCs").Encoded(false);
+
+                                               columns.Add(model => model.Produto).Titled("Produto").Filterable(true).WithFilterOptions(new SelectList(Model.Select(x => x.Produto).Distinct()));
+                                               columns.Add(model => model.Plano).Titled("Plano").Filterable(true).WithFilterOptions(new SelectList(Model.Select(x => x.Plano).Distinct()));
+                                               columns.Add(model => model.RenovacaoAutomatica).Titled("Renovação Automatica");
+                                               columns.Add(model => model.Cidade).Titled("Cidade");
+                                               columns.Add(model => model.UF).Titled("UF");
+                                               columns.Add(model => (model.Prorrata == true ? Math.Round(_Calculos.MostrarPorcentagem(model.StatusId == 5 ? Convert.ToDateTime(model.DataInstalacao).Day : Convert.ToDateTime(model.DataStatus).Day, model.StatusId == 5 ? DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataInstalacao).Month) : DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataStatus).Month))) : 100) + "%").Titled("% Disponibilidade");
+                                               columns.Add(model => model.StatusId == 5 ? (Math.Round(model.ValorMensalidade / DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month), 2) * (DateTime.Now.Day)  - (decimal)model.Desconto) :
+                                                (Math.Round(model.ValorMensalidade / DateTime.DaysInMonth(DateTime.Now.Year, Convert.ToDateTime(model.DataStatus).Month), 2) * (Convert.ToDateTime(model.DataStatus).Day) - (decimal)model.Desconto)
+                                               ).Titled("% Aplicada").Formatted(" {0:C2} ");
+                                               columns.Add(model => model.ValorMensalidade).Titled("Valor Bruto").Formatted(" {0:C2} ");
+                                               columns.Add(model => model.Desconto).Titled("Desconto").Formatted(" {0:C2} ");
+                                               columns.Add(model => model.Grupo).Titled("Grupo");
+
+                                               columns.Add(model => @Html.ActionLink(model.Codigo, "EditarContrato", "Contrato", new { ContratoId = model.ContratoId }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Exibir Contrato").Encoded(false);
+                                           })
+                                          .WithFooter("Footer")
+                                          .WithFilterMode(GridFilterMode.FilterRow)
+                                          .Filterable()
+                                          .Sortable()
+                                           .Css("css-classes") // Overwrites all classes with the new ones
+                                           .AppendCss("table-hover") // Appends classes to the current ones
+                                           .Id("GridCenario")
+                                            .Pageable(pager =>
+                                            {
+                                                pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 10, "10" }, { 30, "30" }, { 50, "50" } };
+                                                pager.ShowPageSizes = true;
+                                                pager.PagesToDisplay = 5;
+                                                pager.CurrentPage = 1;
+                                                pager.RowsPerPage = 10;
+                                            }).RowCss(model => model.StatusCenario == 1 ? "faturar" : "refaturar")
+
+
+
+
+)
+

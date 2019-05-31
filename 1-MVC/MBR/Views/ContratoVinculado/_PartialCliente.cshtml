@@ -1,0 +1,72 @@
+﻿@using Infra.Entidades;
+@using Utils;
+@{
+    var _contratoVinculado = (ContratoNrc)Session["_ContratoVinculado"];
+   
+      string  editavel = "disabled";
+}
+@using (Html.BeginForm("", "", FormMethod.Post,new { @id = "formCadastroCliente",@name = "formCadastroCliente" }))
+{
+<fieldset>
+    <input type="hidden" id="ClienteId" name="ClienteId" value="@_contratoVinculado._Contrato.ClienteId" />
+    <div class="col-sm-10" style="margin:20px;">
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Razão Social", new { @class = "col-md-1 control-label"})
+            <div class="col-md-10">
+                <input type="text" placeholder="RazaoSocial" value="@_contratoVinculado._Contrato._Cliente.RazaoSocial" name="RazaoSocial" id="RazaoSocial" class="form-control col-sm-10" @editavel>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Nome Fantasia", new { @class = "col-md-1 control-label" })
+            <div class="col-md-10">
+                <input type="text" placeholder="NomeFantasia" value="@_contratoVinculado._Contrato._Cliente.NomeFantasia" name="NomeFantasia" id="NomeFantasia" class="form-control col-sm-10" @editavel>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("Código", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Codigo" value="@_contratoVinculado._Contrato._Cliente.CodRelacionamento" name="CodRelacionamento" id="CodRelacionamento" class="form-control" disabled>
+            </div>
+            @Html.Label("Cnae", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Cnae" value="@_contratoVinculado._Contrato._Cliente.Cnae" name="Cnae" id="Cnae" class="form-control" @editavel>
+            </div>
+
+            @Html.Label("Status", new { @class = "col-md-1 control-label" })
+            <div class="col-md-1">
+                <input type="text" placeholder="Status" value="@_contratoVinculado._Contrato._Cliente._StatusCliente.Nome" name="StatusClienteId" id="StatusClienteId" class="form-control" disabled>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:15px;">
+            @Html.Label("CNPJ/CPF", new { @class = "col-md-1 control-label" })
+            <div class="col-md-3">
+                <input type="text" placeholder="CPF/CNPJ" value="@_contratoVinculado._Contrato._Cliente.CpfCnpj" name="CpfCnpj" id="CpfCnpj" class="form-control" @editavel>
+            </div>
+            @Html.Label("Incrição Estadual", new { @class = "col-md-2 control-label" })
+            <div class="col-md-2">
+                <input type="number" placeholder="I.E" value="@_contratoVinculado._Contrato._Cliente.InscEstadual" name="InscEstadual" id="InscEstadual" class="form-control" @editavel>
+            </div>
+            @Html.Label("Incrição Municipal", new { @class = "col-md-2 control-label" })
+            <div class="col-md-2">
+                <input type="number" placeholder="I.M" value="@_contratoVinculado._Contrato._Cliente.InscMunicipal" name="InscMunicipal" id="InscMunicipal" class="form-control" @editavel>
+            </div>
+        </div>
+        <div class="row">
+            @Html.Label("Telefone", new { @class = "col-md-1 control-label" })
+            <div class="col-md-2">
+                <input type="tel" placeholder="Telefone" value="@_contratoVinculado._Contrato._Cliente.Telefone" name="Telefone" id="Telefone" class="form-control" @editavel>
+            </div>
+            @Html.Label("E-Mail", new { @class = "col-sm-1 control-label" })
+            <div class="col-md-2">
+                <input type="email" placeholder="Email" value="@_contratoVinculado._Contrato._Cliente.Email" name="Email" id="Email" class="form-control" @editavel>
+            </div>
+            @Html.Label("Data de Cadastro", new { @class = "col-sm-2 control-label" })
+            <div class="col-md-2">
+                <input type="date" placeholder="DataCadastro" value="@Convert.ToDateTime(@_contratoVinculado._Contrato._Cliente.DataCadastro)" name="DataCadastro" id="DataCadastro" class="form-control" disabled>
+            </div>
+        </div>
+
+    </div>
+</fieldset>
+
+}

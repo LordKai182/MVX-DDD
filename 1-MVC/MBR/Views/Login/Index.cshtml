@@ -1,0 +1,46 @@
+﻿<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<html>
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body id="LoginForm">
+    <div style="margin-top:70px;"></div>
+    <div class="container" style="width:600px;margin:0px,0px,0px,0px">
+        @*<h1 class="form-heading">login Form</h1>*@
+        <div class="login-form">
+            <div class="main-div">
+                <div class="panel">
+                    <h2>Login MundiBR</h2>
+                    <p>Faça Seu login para Acessar</p>
+                </div>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="form-group">
+
+                        <input type="text" class="form-control" id="Login" name="Login" placeholder="Login">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="Senha" name="Senha" placeholder="Senha">
+                    </div>
+                    @*<div class="forgot">
+                        <a href="reset.html">Forgot password?</a>
+                         </div>*@
+                    <button type="submit" class="btn btn-primary">Login</button>
+                }
+            </div>
+            <p class="botto-text"> Mundivox</p>
+        </div>
+    </div>
+
+
+</body>
+</html>
+

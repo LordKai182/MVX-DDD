@@ -1,0 +1,85 @@
+﻿
+@using Infra.Entidades;
+@{
+    string _read = string.Empty;
+    ContratoNrc _contrato = (ContratoNrc)Session["_ContratoVinculado"];
+    var model = _contrato._ListaPropriedade(_contrato.ContratoNrcId);
+}
+@if (model != null)
+{
+<div class="form-group col-sm-10">
+    <table class="table table table-striped table-condensed table-hover ">
+        <tr>
+            <th>
+                @Html.Label("Tipo")
+            </th>
+            <th>
+                @Html.Label("Valor")
+            </th>
+
+            <th>
+                @Html.Label("Obrigatório")
+            </th>
+            <th>
+                @Html.Label("Ações")
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in model)
+        {
+            if (item.ValorDigitado != null)
+            {
+                _read = "readonly";
+            }
+            else
+            {
+                _read = string.Empty;
+            }
+
+            <tr>
+
+                @using (Html.BeginForm("AlteraDetalhes", "ContratoVinculado", FormMethod.Post, new { @id = "formDetalhes", @name = "formDetalhes" }))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PropriedadeNome)
+                    </td>
+
+                    <td>
+                        <input type="hidden" name="ContratoId" id="ContratoId" value="@_contrato.ContratoNrcId" />
+                        <input type="text" onkeypress="Campo('#@item.PropriedadeNome.Replace(" ", "").ToLower()','@item.Mascara')" value="@item.ValorDigitado" class="form-control input-sm" @_read id="@item.PropriedadeNome.Replace(" ", "").ToLower()" name="Valor">
+                        <input type="hidden" name="Nome" id="Nome" value="@item.PropriedadeNome" />
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Obrigatorio)
+                    </td>
+                    <td>
+                        @if (!_contrato.Exportado)
+                        {
+                            <button type="submit" id="form" class="btn btn-success" style="margin-left:5px;margin-right:5px;">
+                                <span class="glyphicon glyphicon-check"></span> Adcionar ao Contrato
+                            </button>
+                        }
+                    </td>
+                }
+                <td>
+                    @if (!_contrato.Exportado)
+                    {
+                        <input type="hidden" name="Nome" id="Nome" value="@item.PropriedadeNome" />
+                        <button class="btn btn-warning" id="btnEdit" onclick="Removeread('@item.PropriedadeNome.Replace(" ", "").ToLower()');" style="margin-left:5px;margin-right:5px;">
+                            <span class="glyphicon glyphicon-check"></span>Alterar
+                        </button>
+
+                    }
+                </td>
+
+            </tr>
+
+
+        }
+
+    </table>
+</div>
+}

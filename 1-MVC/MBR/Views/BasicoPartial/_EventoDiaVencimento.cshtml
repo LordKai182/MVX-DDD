@@ -1,0 +1,20 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@{
+    var db = new Class1(true);
+}
+<input type="hidden" name="ContratosIdsSp" id="ContratosIdsSp" />
+<input type="hidden" name="EventoId" id="EventoId" value="13" />
+<input type="hidden" name="Cenario" id="Cenario" value="@ViewBag.Cenario" />
+<div class="form-row align-items-center">
+    <div class="col-auto my-1">
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Vencimento</label>
+        <select class="custom-select mr-sm-2" id="competencias" name="competencias">
+            @foreach (var item in db.BancoVencimento)
+            {
+                <option value="@item.Vecimento">@item.Vecimento</option>
+            }
+        </select>
+    </div>
+</div>
+

@@ -1,0 +1,311 @@
+﻿@using Utils;
+@{
+
+    ViewBag.Title = "Index";
+}
+<style>
+    .panel-heading {
+        color: #333333;
+        background-color: #f5f5f5;
+        border-color: #dddddd;
+    }
+
+    .panel-primary > .panel-heading {
+        color: #ffffff;
+        background-color: #428bca;
+        border-color: #428bca;
+    }
+
+    .panel-heading + .list-group .list-group-item:first-child {
+        border-top-width: 0;
+    }
+
+    .panel > .table {
+        margin-bottom: 0;
+    }
+
+    .panel > .panel-body + .table {
+        border-top: 1px solid #dddddd;
+    }
+
+    .panel-heading {
+        padding: 10px 15px;
+        border-bottom: 1px solid transparent;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+
+    .panel-title {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+
+        .panel-title > a {
+            color: inherit;
+        }
+
+    .panel-footer {
+        padding: 10px 15px;
+        background-color: #f5f5f5;
+        border-top: 1px solid #dddddd;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .panel-group .panel {
+        margin-bottom: 0;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+        .panel-group .panel + .panel {
+            margin-top: 5px;
+        }
+
+    .panel-group .panel-heading {
+        border-bottom: 0;
+    }
+
+        .panel-group .panel-heading + .panel-collapse .panel-body {
+            border-top: 1px solid #dddddd;
+        }
+
+    .panel-group .panel-footer {
+        border-top: 0;
+    }
+
+        .panel-group .panel-footer + .panel-collapse .panel-body {
+            border-bottom: 1px solid #dddddd;
+        }
+
+    .panel-default {
+        border-color: #dddddd;
+    }
+
+        .panel-default > .panel-heading {
+            color: #333333;
+            background-color: #f5f5f5;
+            border-color: #dddddd;
+        }
+
+            .panel-default > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #dddddd;
+            }
+
+        .panel-default > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #dddddd;
+        }
+
+    .panel-primary {
+        border-color: #428bca;
+    }
+
+        .panel-primary > .panel-heading {
+            color: #ffffff;
+            background-color: #428bca;
+            border-color: #428bca;
+        }
+
+            .panel-primary > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #428bca;
+            }
+
+        .panel-primary > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #428bca;
+        }
+
+    .panel-success {
+        border-color: #d6e9c6;
+    }
+
+        .panel-success > .panel-heading {
+            color: #468847;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+            .panel-success > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #d6e9c6;
+            }
+
+        .panel-success > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #d6e9c6;
+        }
+
+    .panel-warning {
+        border-color: #fbeed5;
+    }
+
+        .panel-warning > .panel-heading {
+            color: #c09853;
+            background-color: #fcf8e3;
+            border-color: #fbeed5;
+        }
+
+            .panel-warning > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #fbeed5;
+            }
+
+        .panel-warning > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #fbeed5;
+        }
+
+    .panel-danger {
+        border-color: #eed3d7;
+    }
+
+        .panel-danger > .panel-heading {
+            color: #b94a48;
+            background-color: #f2dede;
+            border-color: #eed3d7;
+        }
+
+            .panel-danger > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #eed3d7;
+            }
+
+        .panel-danger > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #eed3d7;
+        }
+
+    .panel-info {
+        border-color: #bce8f1;
+    }
+
+        .panel-info > .panel-heading {
+            color: #3a87ad;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+
+            .panel-info > .panel-heading + .panel-collapse .panel-body {
+                border-top-color: #bce8f1;
+            }
+
+        .panel-info > .panel-footer + .panel-collapse .panel-body {
+            border-bottom-color: #bce8f1;
+        }
+
+    .well {
+        min-height: 20px;
+        padding: 19px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+        .well blockquote {
+            border-color: #ddd;
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+    .well-lg {
+        padding: 24px;
+        border-radius: 6px;
+    }
+
+    .well-sm {
+        padding: 9px;
+        border-radius: 3px;
+    }
+
+    .close {
+        float: right;
+        font-size: 21px;
+        font-weight: bold;
+        line-height: 1;
+        color: #000000;
+        text-shadow: 0 1px 0 #ffffff;
+        opacity: 0.2;
+        filter: alpha(opacity=20);
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000000;
+            text-decoration: none;
+            cursor: pointer;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+
+    button.close {
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
+
+    .modal-open {
+        overflow: hidden;
+    }
+
+        body.modal-open,
+        .modal-open .navbar-fixed-top,
+        .modal-open .navbar-fixed-bottom {
+            margin-right: 15px;
+        }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1040;
+        display: none;
+        overflow: auto;
+        overflow-y: scroll;
+    }
+</style>
+<style>
+    .bolded {
+        font-weight: bold;
+        background-color: azure;
+    }
+
+    .mvc-grid {
+        position: relative;
+        font-size: 12px;
+        width: 100%;
+        line-height: 20px;
+        overflow-x: auto;
+    }
+</style>
+<div class="well" style="background-color:steelblue">
+
+    <div class="form-row">
+        @RenderPage("~/Views/BasicoPartial/_EventoCliente.cshtml")
+        @RenderPage("~/Views/BasicoPartial/_EventoCriarContrato.cshtml")
+    </div>
+    </div>
+    @Html.PanelHeader("Contrato")
+
+    @(Html.AjaxGrid(Url.Action("IndexGrid")))
+
+    @Html.PanelFooter()
+
+    <script type="text/javascript">
+        $('#formCadastroContrato').submit(function () {
+            //alert('OIII');
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/CadastroContraManual',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                }
+            });
+        });
+    </script> <!-- JS ENVIO CADASTRO CLIENTE -->

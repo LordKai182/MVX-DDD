@@ -1,0 +1,183 @@
+﻿@using Infra.Entidades;
+@using Utils;
+@model  IEnumerable<Infra.Entidades.Contrato>
+@{
+    ViewBag.Title = "EditarCliente";
+}
+
+<style>
+    .bolded {
+        font-weight: bold;
+        background-color: cadetblue;
+    }
+
+    .cancelado {
+        font-weight: bold;
+        background-color: indianred;
+        opacity: 0.8;
+    }
+
+    .substituto {
+        font-weight: bold;
+        background-color: khaki;
+        opacity: 0.8;
+    }
+
+    .upgrade {
+        font-weight: bold;
+        background-color: cadetblue;
+        opacity: 0.8;
+    }
+
+    .mvc-grid {
+        position: relative;
+        font-size: 12px;
+        width: 100%;
+        line-height: 20px;
+        overflow-x: auto;
+    }
+
+    .naoexportado {
+        font-weight: bold;
+        background-color: lightgoldenrodyellow;
+        opacity: 0.8;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
+</style>
+<div class="well" style="background-color:steelblue">
+
+    <div class="form-row">
+       
+        @RenderPage("~/Views/BasicoPartial/_EventoContrato.cshtml")
+
+    </div>
+</div>
+@Html.PanelHeader("Contratos Cliente: ")
+@(Html
+                                       .Grid(Model)
+                                       .Build(columns =>
+                                       {
+                                           columns.Add(model => model.ContratoStatusId == 3 ? "Cancelado" : model.ContratoStatusId == 9 ? "Upgrade/Downgrade" : @Html.CheckBox("Contrato[]", false, new { @value = model.ContratoId, @onchange = "Aviso();" }).ToHtmlString()).Encoded(false);
+                                           columns.Add(c => c._Produto.Nome).Titled("Produto");
+                                           columns.Add(model => model._ContratoRelacionamento.Count() > 0 ? model._ContratoRelacionamento.First().DadosBabelId.ToString() : "Sem Relacionamento").Titled("Código Mundidata");
+                                           columns.Add(model => model.Exportado == true ? "Sim" : "Não").Titled("Exportado");
+                                           columns.Add(model => model._InstalacaoEndereco.Count(x => x.TipoLogradouroId == 1) == 0 ? "Sem Prédio" : model._InstalacaoEndereco.First(x => x.TipoLogradouroId == 1)._Predio.Nome).Titled("Prédio Instalação");
+                                           columns.Add(c => c.Valor).Titled("Mensalidade").Formatted(" {0:C2} ").Filterable(true);
+                                           columns.Add(c => c._ContratoStatus.ContratoStatusNome).Titled("Status");
+                                           columns.Add(c => c.Codigo).Titled("Código");
+                                           columns.Add(c => c._Produto.Tipo).Titled("Tipo");
+                                           columns.Add(c => c.NumeroSO).Titled("Número S.O");
+                                           columns.Add(c => c.Alias).Titled("Alias");
+                                           columns.Add(c => c.DataDaAssinatura).Titled("Data Assinatura").Formatted("{0:d}"); ;
+                                           columns.Add(c => c.DataDaContratacao).Titled("Data Contratação").Formatted("{0:d}"); ;
+                                           columns.Add(c => c.DataInstalacao).Titled("Data Instalação").Formatted("{0:d}");
+                                           columns.Add(c => "<span class='badge badge-danger'>"+c._EventosDeContrato.Count(x=>x.Exportado == false)+"</span>").Titled("Eventos Pendentes").Encoded(false);
+                                           columns.Add(model => model.ContratoStatusId == 3 ? "Cancelado" : model.ContratoStatusId == 9 ? "Aguardando Upgrade/Downgrade" : @Html.ActionLink("Exibir", "EditarContrato", new { ContratoId = model.ContratoId }, new { @class = "btn btn-primary", @style = "margin-left:5px;" }).ToHtmlString()).Titled("Contratos").Encoded(false);
+                                       })
+                                       .Empty("Nada Encontrado")
+                                       .WithFilterMode(GridFilterMode.FilterRow)
+                                       .MultiFilterable()
+                                        .Css("css-classes") // Overwrites all classes with the new ones
+                                       .AppendCss("table-hover") // Appends classes to the current ones
+                                       .Filterable()
+                                       .Sortable()
+                                          .Pageable(pager =>
+                                          {
+                                              pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 30, "10" }, { 50, "30" }, { 70, "50" } };
+                                              pager.ShowPageSizes = true;
+                                              pager.PagesToDisplay = 5;
+                                              pager.CurrentPage = 1;
+                                              pager.RowsPerPage = 30;
+                                          })
+                                          .RowCss(model => model.ContratoStatusId == 5 ? "bolded" : model.ContratoStatusId == 3 ? "cancelado" : model.ContratoStatusId == 10 ? "substituto" : model.ContratoStatusId == 9 ? "upgrade" : model.ContratoStatusId == 12 ? "naoexportado" : "")
+)
+@Html.PanelFooter()
+
+
+
+@section scripts{
+   
+    <script>
+        function Aviso() {
+            //alert('Oiiii');
+            var e = document.getElementsByName("Contrato[]");
+            var teste = '';
+            var num = 0;
+
+            for (var k in e) {
+                var el = e[k];
+
+                if (el.checked) {
+                    teste = teste + ',' + el.value;
+                    num++;
+                }
+            }
+
+            if (num >= 2) {
+
+                $('.eventocontra').css('display', 'none');
+                $('.eventogrupo').css('display', 'block');
+            }
+
+            if (num == 1) {
+                $('.eventogrupo').css('display', 'none');
+                $('.eventocontra').css('display', 'block');
+
+            }
+            if (num == 0) {
+                $('.eventogrupo').css('display', 'block');
+                $('.eventocontra').css('display', 'block');
+            }
+            //$('#myVar').val(teste);
+            document.getElementById("ContratosGrupo").value = teste;
+
+            TentaAi(teste);
+        }
+    </script>
+    <script>
+        function TentaAi(valores) {
+
+            $.ajax({
+                type: "GET",
+                url: '/Contrato/CriarGrupo?Contratos=' + valores,
+                dataType: 'html',
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+
+                    $("#conteudoGrupo").html('');
+                    $("#conteudoGrupo").html(content);
+
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        $('#formGrupo').submit(function () {
+            var dados = new FormData(this);
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '/Contrato/SalvarGrupo',
+                dataType: 'html',
+                data: dados,
+                processData: false,
+                cache: false,
+                contentType: false,
+                success: function (content) {
+                    swal({
+                        type: 'success',
+                        title: 'Mundivox',
+                        text: 'Evento Concluido'
+                    })
+
+
+                }
+            });
+        });
+    </script> <!-- JS ENVIO CADASTRO CLIENTE -->
+}

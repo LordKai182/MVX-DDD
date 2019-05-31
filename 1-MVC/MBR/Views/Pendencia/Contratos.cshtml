@@ -1,0 +1,53 @@
+﻿@using Infra.Entidades;
+@using Infra;
+@using Utils;
+@model  IEnumerable<Infra.Entidades.Contrato>
+@{
+    #region LISTAS
+
+    Utils.Formatacao _Formatacao = new Utils.Formatacao();
+    Utils.Calculos _Calculos = new Utils.Calculos();
+    #endregion
+  
+}
+
+@(Html
+
+.Grid(Model)
+.Build(columns =>
+{
+    columns.Add(model => Html.CheckBox("Contrato[]", false, new { @value = model.ContratoId, @onchange = "validar();" }));
+    columns.Add(c => c.Codigo).Titled("Codigo").Filterable(false);
+    columns.Add(c => c.DataCriacao).Titled("Data Criação").Filterable(true);
+    columns.Add(c => c._Usuario.Nome).Titled("Cadastrado por").Filterable(true);
+    columns.Add(c => c.NumeroSO).Titled("Numero SO").Filterable(true);
+    columns.Add(c => c._ContratoStatus.ContratoStatusNome).Titled("Status").Filterable(true);
+    columns.Add(c => c._Cliente.RazaoSocial).Titled("Razão Social").Filterable(true);
+    columns.Add(c => c._Cliente.CpfCnpj).Titled("CpfCnpj").Filterable(true);
+    columns.Add(c => c._Produto.Nome).Titled("Produto").Filterable(true);
+    columns.Add(c=>c._InstalacaoEndereco.Count(x => x.TipoLogradouroId == 1) == 0 ? "ND":c._InstalacaoEndereco.First(x=>x.TipoLogradouroId == 1)._Predio.Nome).Titled("Prédio").Filterable(true);
+    columns.Add(c => c.Valor).Titled("Valor").Formatted("{0:C2}").Filterable(true);
+    columns.Add(c => c.Consultor).Titled("Consultor").Filterable(true);
+
+})
+.WithFilterMode(GridFilterMode.FilterRow)
+.Filterable()
+.Sortable()
+.Css("css-classes") // Overwrites all classes with the new ones
+.AppendCss("table-hover") // Appends classes to the current ones
+.Id("GridCenario")
+ .Pageable(pager =>
+ {
+     pager.PageSizes = new Dictionary<Int32, String> { { 0, "Todos" }, { 10, "10" }, { 30, "30" }, { 50, "50" } };
+     pager.ShowPageSizes = true;
+     pager.PagesToDisplay = 5;
+     pager.CurrentPage = 1;
+     pager.RowsPerPage = 10;
+ })
+//.RowCss(model => model.ContratoStatusId == 1 ? "faturar" : "refaturar")
+
+
+
+
+)
+

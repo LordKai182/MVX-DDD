@@ -1,0 +1,59 @@
+﻿@{
+    List<string> ListaImpressoras = new List<string>();
+    ListaImpressoras = ViewBag.Impressoras = new Utils.retornos().RetornaImpressoras();
+}
+
+@using (Html.BeginForm("ProcessaEventos", "Arquivos", FormMethod.Post, new { @class = "form-horizontal", @id = "formArquivo", @name = "formArquivo" }))
+{
+    <input type="hidden" name="ArquivosIds" id="ArquivosIds" />
+    <input type="hidden" name="Observacao" id="Observacao" />
+    <div class="form-row">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h6><span class="label label-default">Eventos</span></h6>
+                    <div class="form-group">
+                        <select name="EventoArquivo" id="EventoArquivo" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                            <optgroup label="Eventos de Arquivos">
+                                <option value="Download">Download Selecionados</option>
+                                <option value="Imprimir">Imprimir Selecionados</option>
+                                <option value="Descricao">Inserir Observação</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <!-- .container-fluid -->
+            </div>
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h6><span class="label label-default">Impressoras</span></h6>
+                    <div class="form-group">
+                        <select name="Impressora" id="Impressora" class="selectpicker" data-live-search="true" data-live-search-placeholder="Buscar" data-actions-box="true">
+                            <optgroup label="Lista de Impressoras">
+                                @foreach (var impressora in ListaImpressoras)
+                                {
+                                    <option value="@impressora">@impressora</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <button type="submit" class="btn btn-primary" style="margin-left:20px;">Processar Evento</button>
+                <!-- .container-fluid -->
+            </div>
+        </nav>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <input type="button" value="(Atualizar)" id="btnArq" name="btnArq" onclick="AtualiPagina();" class="btn btn-primary submitBtn">
+                    <div class="d-inline p-2 text-white" style="margin-top:30px;"> Marcar/Desmarcar <input type="checkbox" onchange="validar();" name="select-all" id="select-all" /></div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+}

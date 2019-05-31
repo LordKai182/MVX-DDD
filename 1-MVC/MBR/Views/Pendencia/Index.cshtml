@@ -1,0 +1,52 @@
+﻿@using Utils;
+@{
+
+    ViewBag.Title = "Index";
+}
+@RenderPage("~/Views/BasicoPartial/EventoPendencia.cshtml")
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Envio de Contratos</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Envio de Contratos Vinculados</a>
+        <a class="nav-item nav-link" id="nav-evento-tab" data-toggle="tab" href="#nav-evento" role="tab" aria-controls="nav-evento" aria-selected="false">Envio de Evento</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        @Html.PanelHeader("Envio de Contratos")
+        @{ Html.RenderAction("Contratos"); }
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        @Html.PanelHeader("Envio de Contratos Vinculado")
+        @(Html.AjaxGrid(Url.Action("Vinculados")))
+        @Html.PanelFooter()
+    </div>
+    <div class="tab-pane fade" id="nav-evento" role="tabpanel" aria-labelledby="nav-evento-tab">
+        @Html.PanelHeader("Envio de Eventos MundBr")
+        @(Html.AjaxGrid(Url.Action("_PartialEventos")))
+        @Html.PanelFooter()
+    </div>
+</div>
+@section scripts
+ {
+    <script>
+        function validar() {
+            var e = document.getElementsByName("Contrato[]");
+            var teste = '';
+            var num = 0;
+
+            for (var k in e) {
+                var el = e[k];
+
+                if (el.checked) {
+                    teste = teste + ',' + el.value;
+                    num++;
+                }
+            }
+
+            document.getElementById("ContratosIds").value = teste;
+            alert(teste);
+        }
+    </script>
+    }
